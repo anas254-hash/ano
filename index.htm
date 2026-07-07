@@ -30,9 +30,12 @@
                 align-items: center !important; /* يخليهم في نص مستوى بعض بالظبط */
             }
             .modal video {
-                width: 45% !important; /* نسبة ممتازة للفيديو الطولي */
-                min-height: 220px !important; /* السطر السحري: بيضمن إن الفيديو ميبقاش قصير أوي ويحافظ على طوله */
-                object-fit: cover !important; /* يخلي الفيديو مالي الحاوية بتاعته ومن غير مط */
+                
+                width: auto !important; /* يخلي العرض يتظبط تلقائي بناءً على الطول الجديد */
+                max-width: 45% !important; /* يضمن إنه مياخدش أكتر من مساحته جنب الكلام */
+                height: 320px !important; /* كبرنا الطول هنا لـ 320px عشان يطول ويبقى واضح جداً */
+                object-fit: contain !important; /* يحافظ على أبعاد الفيديو الأصلية الطولية من غير ما يقص منها */
+            
             }
             .modal-tex {
                 font-size: 13px !important; /* حجم مناسب جداً للكلام العربي عشان يفرش براحته جنب الفيديو */
