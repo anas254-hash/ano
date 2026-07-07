@@ -22,6 +22,27 @@
             position: relative;
             transition: background-color 0.5s ease; /* تنقل ناعم للألوان */
         }
+		/* ضبط الشاشات الصغيرة للموبايل - يمنع صغر حجم الفيديو ويحافظ على التناسق */
+        @media (max-width: 600px) {
+            .video-text-container {
+                flex-direction: row-reverse !important; /* يفضلوا جنب بعض */
+                gap: 12px; /* مسافة مناسبة */
+                align-items: center !important; /* يخليهم في نص مستوى بعض بالظبط */
+            }
+            .modal video {
+                width: 45% !important; /* نسبة ممتازة للفيديو الطولي */
+                min-height: 220px !important; /* السطر السحري: بيضمن إن الفيديو ميبقاش قصير أوي ويحافظ على طوله */
+                object-fit: cover !important; /* يخلي الفيديو مالي الحاوية بتاعته ومن غير مط */
+            }
+            .modal-tex {
+                font-size: 13px !important; /* حجم مناسب جداً للكلام العربي عشان يفرش براحته جنب الفيديو */
+                line-height: 1.5;
+                width: 55% !important;
+            }
+            #t {
+                font-size: 24px;
+            }
+        }
 		#t{font-weight:bold;
 		font-family: 'Bungee', sans-serif;
 font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فالمقاس ده هيكون ممتاز */
