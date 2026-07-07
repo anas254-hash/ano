@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Amiri&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>brithday anos</title>
+	
+    <style>
+        /* الإعدادات العامة للموقع - البداية بخلفية بيضاء */
+        body {
+            background-color: #ffffff; /* الخلفية برة بيضاء تماماً */
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: background-color 0.5s ease; /* تنقل ناعم للألوان */
+        }
+		#t{font-weight:bold;
+		font-family: 'Bungee', sans-serif;
+font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فالمقاس ده هيكون ممتاز */
+}
+
+        /* ستايل شاشة الظرف الخارجي */
+        #envelope-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        /* الكلمة اللي فوق الظرف */
+        .envelope-text {
+            margin-bottom: 25px; /* مسافة بين الكلمة والظرف */
+            font-size: 28px;
+            color: #cccccc!important;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* جسم الجواب المستطيل */
+        .envelope {
+            position: relative;
+            width: 280px; 
+            height: 180px;
+            background-color: #fbcad4; /* نفس لون الباكجروند اللي جوة بالظبط */
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        /* غطاء الجواب المثلث */
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 140px solid transparent;  
+            border-right: 140px solid transparent; 
+            border-top: 100px solid #fec3cf; 
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            z-index: 2;
+        }
+
+        /* قفل القلب الأبيض في المنتصف */
+        .envelope::after {
+            content: '🤍'; 
+            position: absolute;
+            top: 85px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 35px; 
+            z-index: 3;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        /* الكلمة اللي تحت الظرف */
+        .envelope-text {
+            margin-top: 50px;
+            font-size: 18px;
+            color: #ff758f;
+            font-weight: bold;
+            letter-spacing: 1px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+            60% { transform: translateY(-4px); }
+        }
+
+        /* المحتوى الرئيسي للموقع */
+        #main-content {
+            display: none;
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
+            padding: 120px 20px 100px 20px;
+            box-sizing: border-box;
+            position: relative; /* حبس التاريخ والشمعة جوة المحتوى ده عشان ميعوموش */
+        }
+
+        /* شريطة التاريخ - تم تغييرها لـ absolute لثباتها */
+        .date-ribbon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 70px;
+            z-index: 5;
+        }
+        .date-ribbon img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* شمعة العمر - تم تغييرها لـ absolute لثباتها */
+        .age-candles {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 90px;
+            z-index: 5;
+        }
+        .age-candles img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* صورة الشخص */
+        .profile-img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            margin-bottom: 25px;
+        }
+
+        /* صندوق الكلام وتأثير الكتابة */
+        .love-letter {
+            color: white;
+            font-size: 18px;
+            line-height: 1.8;
+            text-align: left;
+            direction: ltr;
+            margin-bottom: 40px;
+            min-height: 200px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1); 
+			font-family: 'Lobster Two', Georgia, serif;
+            font-size: 22px; 
+            font-weight: bold; 
+        }
+
+        /* زرار تشغيل الفيديو في الأسفل */
+        .video-trigger-btn {
+            background-color: white;
+            color: #ff758f;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.2s;
+        }
+
+        .video-trigger-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* نافذة الفيديو والذكريات المنبثقة */
+        .modal {
+            display: none !important; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100; 
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* صندوق المحتوى الأبيض */
+        .modal-content {
+            position: relative;
+            width: 95%;
+            max-width: 850px; 
+            background-color: black;
+            border-radius: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+            max-height: 90vh;
+            overflow-y: auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .modal-text {
+            flex: 1; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-size: 22px; 
+            color: #ff758f;
+            line-height: 1.6;
+            text-align: right; 
+            direction: rtl;    
+            padding: 0px;
+        }
+		
+        .modal-tex {
+            flex: 1; 
+            font-family: 'Amiri', serif !important; 
+            font-size: 18px; /* صغرنا الخط سنة للموبايل عشان يريح المساحة */
+            color:#cccccc ;
+            line-height: 1.5;
+            text-align: right; 
+            direction: rtl;    
+            padding: 0px;
+        }
+
+        /* معرض الصور بالأسفل */
+        .modal-gallery {
+            width: 100%;
+            margin-top: 25px;
+            border-top: 1px dashed #fbcad4; 
+            padding-top: 20px;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+
+        /* ستايل مخصص وقوي جداً للاسم الجديد */
+        #special-gallery-text {
+            display: block !important;
+            visibility: visible !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            font-size: 18px !important; 
+            color: white !important; 
+            font-weight: bold !important;
+            line-height: 1.6 !important;
+            font-family: 'Bungee', sans-serif;
+			text-align: center;
+            margin-top: 10px !important;
+            margin-bottom: 25px !important; 
+            padding: 0 15px !important;
+            box-sizing: border-box !important;
+        }
+
+        /* حاوية تجمع الفيديو والنص جنب بعض بالظبط */
+        .video-text-container {
+            display: flex;
+            flex-direction: row-reverse; /* يخلي الفيديو على اليمين والنص على الشمال */
+            align-items: flex-start; /* موازاتهم من الأعلى للحفاظ على التناسق */
+            gap: 20px; 
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        /* ضبط أبعاد الفيديو */
+        .modal video {
+            width: 45%; /* تقليل النسبة لضمان وجود مساحة كافية للكلام بجانبه */
+            max-width: 320px;
+            height: auto;
+            border-radius: 15px;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        /* ستايل الصورة المجمعة */
+        .modal-gallery img {
+            width: 100%; 
+            height: auto; 
+            max-height: 700px; 
+            object-fit: contain; 
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* زر الإغلاق */
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #ff758f;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 30;
+        }
+
+        /* ضبط الشاشات الصغيرة للموبايل - يمنع النزول تحت ويحافظ على وجودهم جنب بعض */
+        @media (max-width: 600px) {
+            .video-text-container {
+                flex-direction: row-reverse !important; /* إجبار المحاذاة الأفقية جنب بعض حتى في الموبايل */
+                gap: 10px; /* تقليل المسافة لتوفير مساحة */
+            }
+            .modal video {
+                width: 40% !important; /* حجم الفيديو في الموبايل عشان يسيب مساحة للنص */
+            }
+            .modal-tex {
+                font-size: 14px !important; /* تصغير الفونت العربي قليلاً ليناسب العرض الجانبي في الموبايل */
+                line-height: 1.4;
+            }
+            #t {
+                font-size: 24px; /* تصغير عنوان الـ Birthday للموبايل */
+            }
+        }
+		
+    </style>
+</head>
+<body>
+
+    <video id="bg-music" src="sound.mp4" loop style="display:none;"></video>
+
+    <div id="envelope-screen" onclick="openEnvelope()">
+        <div class="envelope-text">hey babe!</div>
+        <div class="envelope"></div>
+    </div>
+
+    <div id="main-content">
+        
+        <div class="date-ribbon">
+            <img src="date.jpeg" alt="2-8-2004">
+        </div>
+
+        <div class="age-candles">
+            <img src="candles.png" alt="22">
+        </div>
+
+        <img src="s.png" alt="Birthday Boy" class="profile-img">
+        <div id="t">Happy brithday ano❣️</div>
+        
+        <div id="typewriter-text" class="love-letter"></div>
+
+        <button class="video-trigger-btn" onclick="openVideoModal()">
+            Click ya anosii❣️
+        </button>
+    </div>
+
+    <div id="video-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeVideoModal()">&times;</span>
+            
+            <div class="video-text-container">
+                <video id="surprise-video" src="vi.mp4" controls></video>
+                
+                <div class="modal-tex">
+				كل سنه وانت طيب يحبيبي💕.
+		        <br>
+                يارب تكون بخير دوم ووياي ومع كل اللي تحبهم ولا يحرمنا منك يارب وتكون كل ايامك حلوه وتتخرج هاي السنه وتطلع بأعلى معدل يارب وتكون احلى واشطر محامي اشوفو ,اللي ابيك تعرفه انك غالي علي وعلى قلبي ولا احد جه ولا رح يجي وياخد مكانك انا وانت عشره عمر صدق ارتاحلك واحكيلك واحب كلامنا سوا انا صدق مره احبك واموت عليك 
+                ولسه ابي شكلاته للحين ترا.
+                <br>
+                هذا ثاني عيدميلاد لك واحنا سوا صدق مرت الايام بسرعه ولا حسيت فيها رغم انك مستفز بس يا حلو الايام بيك واعرفك ما تغار انت بس تنصحني          
+                <img src="tli.gif" alt="gif" style="display:inline-block; max-width: 80px; height:auto; margin-top:9px;"> 
+                <br>
+                بس والله صدق الشوق لك غلاب ,كلشي سويته هنا سويته لاني يمكن هالشي يبسطك وهسه  
+                انا بتاريخ 7\7 بس انت هتشوفو بعد شهر وكلي حماس والله وياريت يسعدك 
+                <br>
+                وبس بحبك انوسي❣️.                                                                                                                                                                               
+                بس متى هناكل برجر سوا؟
+                </div>
+            </div>
+            
+            <div class="modal-gallery">
+			    <div id="special-gallery-text">"These are some of the memories that I have never forgotten—they are held deeply in my heart long before they were ever saved on my phone. Always be sure of one thing, I love u ❣️"</div>
+                <img src="pic.jpg" alt="Memory">
+            </div>
+        </div>
+    </div>
+
+<script>
+    const fullText = "Being with you is truly one of the best things that has ever happened to me. From the moment you came into my life, everything started to feel brighter and closer to my heart. \n\nThank you for loving me, for supporting me even when things are difficult, and for always reminding me that I'm not alone. You make ordinary days feel special just by being there. \n\nI'm so grateful for every laugh we share, every memory we create, and every moment we spend together. You have a way of making my heart feel safe and happy at the same time. Your kindness, the way you support me, stand by my side, and care for my best interest only make you closer and dearer to my heart. \n\nThank you for being my lifelong companion and my best friend. I'm so lucky that we are together. Happy Birthday again, my love. I love you more than words can ever explain. ❤️";
+
+    function openEnvelope() {
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 250, 
+                spread: 100,        
+                origin: { y: 0.6 }, 
+                scalar: 1.2,        
+                colors: ['#ff758f', '#fbcad4', '#ffd166', '#06d6a0', '#118ab2']
+            });
+        }
+
+        document.getElementById('envelope-screen').style.display = 'none';
+        document.getElementById('main-content').style.display = 'block'; 
+        document.body.style.backgroundColor = '#fbcad4'; 
+        startWordByWordTyping();
+
+        const music = document.getElementById('bg-music');
+        if (music) {
+            music.play().catch(error => console.log("Music play blocked"));
+        }
+    }
+
+    function startWordByWordTyping() {
+        const container = document.getElementById('typewriter-text');
+        if (!container) return; 
+        
+        const words = fullText.split(' ');
+        let index = 0;
+
+        function typeNextWord() {
+            if (index < words.length) {
+                let wordToShow = words[index];
+                if (wordToShow.includes('\n')) {
+                    wordToShow = wordToShow.replace(/\n/g, '<br>');
+                }
+                
+                container.innerHTML += wordToShow + ' ';
+                index++;
+                setTimeout(typeNextWord, 250); 
+            }
+        }
+        typeNextWord();
+    }
+
+    function openVideoModal() {
+        document.getElementById('video-modal').style.setProperty('display', 'flex', 'important');
+        const music = document.getElementById('bg-music');
+        if (music) music.volume = 0.2; 
+        
+        const video = document.getElementById('surprise-video');
+        if (video) video.play();
+    }
+
+    function closeVideoModal() {
+        document.getElementById('video-modal').style.setProperty('important', 'none'); // تصحيح تيكنيكال صغير لإغلاق المودال بشكل سليم
+        document.getElementById('video-modal').style.setProperty('display', 'none', 'important');
+        const video = document.getElementById('surprise-video');
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
+        const music = document.getElementById('bg-music');
+        if (music) music.volume = 1.0; 
+    }
+</script>
+    
+</body>
+</html>
