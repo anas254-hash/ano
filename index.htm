@@ -250,7 +250,7 @@
             font-weight: bold;
         }
 
-        /* ==================== شاشة الورود الكثيفة بالصورة المختارة ==================== */
+        /* ==================== شاشة الورود الكثيفة والأنيميشن ==================== */
         #roses-overlay {
             display: none;
             position: fixed;
@@ -265,21 +265,38 @@
             overflow: hidden;
         }
 
+        /* خلفية ورود كثيرة ومكررة تملأ الشاشة */
         .real-roses-bg {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: url('download (1).jpg'); 
-            background-size: cover;
+            background-image: url('flower.jpg'); 
+            background-size: 300px 300px; /* تكرار الورود بكثافة كثر جداً */
+            background-repeat: repeat;
             background-position: center;
-            animation: bloomRealRoses 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes bloomRealRoses {
-            0% { transform: scale(0.2); opacity: 0; }
+        /* كلاس أنيميشن الدخول السريع */
+        .roses-enter {
+            animation: bloomIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        /* كلاس أنيميشن الخروج بنفس الحركة العكسية */
+        .roses-exit {
+            animation: bloomOut 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+        }
+
+        @keyframes bloomIn {
+            0% { transform: scale(0); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
+        @keyframes bloomOut {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+        /* المربع الصغير جداً فوق الورود */
         .tiny-popup {
             position: relative;
             background: rgba(255, 255, 255, 0.95);
@@ -289,7 +306,7 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             z-index: 220;
-            animation: popTiny 0.4s ease-out 0.4s forwards;
+            animation: popTiny 0.4s ease-out 0.3s forwards;
             opacity: 0;
             transform: scale(0.5);
             max-width: 260px;
@@ -470,7 +487,7 @@
     </div>
 
     <div id="roses-overlay">
-        <div class="real-roses-bg"></div>
+        <div id="roses-bg" class="real-roses-bg"></div>
 
         <div class="tiny-popup">
             <h4>شطوور يا انوس وأنا اموت عليج 🌸🤍</h4>
@@ -580,15 +597,25 @@
                 });
             }
 
-            // إظهار شاشة الورود الكثيفة والرسالة الصغار
             const rosesOverlay = document.getElementById('roses-overlay');
+            const rosesBg = document.getElementById('roses-bg');
+
+            // 1. إعادة ضبط الكلاسات وإظهار الشاشة
+            rosesBg.classList.remove('roses-exit');
+            rosesBg.classList.add('roses-enter');
             rosesOverlay.style.display = 'flex';
 
-            // اختفاء الورود بعد 3 ثوانٍ وتفعيل نافذة الفيديو
+            // 2. بعد 2.5 ثانية يبدأ تأثير خروج الورود السريع (Reverse Bloom)
+            setTimeout(() => {
+                rosesBg.classList.remove('roses-enter');
+                rosesBg.classList.add('roses-exit');
+            }, 2500);
+
+            // 3. عند انتهاء أنيميشن الخروج (بعد 3.1 ثانية) تختفي شاشة الورود تماماً ويفتح الفيديو فوراً
             setTimeout(() => {
                 rosesOverlay.style.display = 'none';
                 openVideoModal();
-            }, 3000);
+            }, 3100);
 
         } else {
             document.getElementById('quiz-error').style.display = 'block';
