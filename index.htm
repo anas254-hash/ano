@@ -162,7 +162,7 @@
             transform: scale(1.05);
         }
 
-        /* ==================== نافذة الباسورد (Password Modal) ==================== */
+        /* ==================== لوحة الأرقام (Keypad Password) ==================== */
         #password-modal {
             display: none;
             position: fixed;
@@ -170,21 +170,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
             z-index: 150;
             justify-content: center;
             align-items: center;
         }
 
         .pass-box {
-            background: #ffd1dc;
-            padding: 30px 25px;
-            border-radius: 20px;
+            background: rgba(255, 230, 238, 0.95);
+            padding: 25px 20px;
+            border-radius: 25px;
             text-align: center;
-            width: 90%;
-            max-width: 340px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            width: 88%;
+            max-width: 320px;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
             position: relative;
             animation: popup 0.3s ease-out;
             border: 2px solid #ffffff;
@@ -196,48 +196,76 @@
         }
 
         .pass-box h3 {
-            margin: 0 0 15px 0;
+            margin: 0 0 8px 0;
             color: #d6336c;
             font-family: 'Cairo', sans-serif;
-            font-size: 20px;
+            font-size: 18px;
             direction: rtl;
         }
 
-        .pass-box input {
-            width: 80%;
-            padding: 10px 15px;
-            border: 2px solid #ffb6c1;
-            border-radius: 12px;
-            outline: none;
-            font-size: 16px;
-            text-align: center;
-            margin-bottom: 15px;
+        .pass-box .hint-text {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 12px;
             font-family: 'Cairo', sans-serif;
-            color: #495057;
+        }
+
+        .pin-display {
             background: #ffffff;
-            transition: border-color 0.2s;
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+            padding: 8px 15px;
+            font-size: 22px;
+            letter-spacing: 5px;
+            color: #ff758f;
+            font-weight: bold;
+            min-height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
         }
 
-        .pass-box input:focus {
-            border-color: #ff758f;
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 0 10px;
         }
 
-        .pass-box button {
+        .key-btn {
+            background: #ffffff;
+            color: #d6336c;
+            border: 2px solid #ffe3eb;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 12px 0;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            margin: 0 auto;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(255, 117, 143, 0.15);
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .key-btn:active {
+            transform: scale(0.9);
             background: #ff758f;
             color: white;
-            border: none;
-            padding: 8px 25px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            transition: background 0.2s, transform 0.1s;
         }
 
-        .pass-box button:hover {
-            background: #e65c7b;
-            transform: scale(1.03);
+        .key-btn.action {
+            font-size: 14px;
+            background: #fff0f5;
+            color: #ff758f;
+            border-radius: 15px;
+            width: 100%;
+            height: 55px;
         }
 
         .close-pass-modal {
@@ -253,25 +281,66 @@
         #pass-error {
             color: #e63946;
             font-size: 13px;
-            margin-top: 10px;
+            margin-top: 12px;
             display: none;
             font-family: 'Cairo', sans-serif;
             direction: rtl;
         }
 
-        /* رسالة النجاح داخل الـ Modal */
-        .success-msg {
+        /* ==================== نافذة التهنئة المباشرة (شطوور يا انوس) ==================== */
+        #success-modal {
             display: none;
-            font-size: 22px;
-            color: #ff758f;
-            font-family: 'Cairo', sans-serif;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 15px;
-            animation: popup 0.5s ease-out;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 180;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* نافذة الفيديو والذكريات المنبثقة */
+        .success-card {
+            background: #ffffff;
+            padding: 30px 25px;
+            border-radius: 25px;
+            text-align: center;
+            width: 80%;
+            max-width: 300px;
+            box-shadow: 0 10px 30px rgba(255, 117, 143, 0.3);
+            animation: popup 0.4s ease-out;
+            border: 3px solid #ffb6c1;
+        }
+
+        .success-card h2 {
+            margin: 0 0 15px 0;
+            color: #ff758f;
+            font-family: 'Cairo', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .continue-btn {
+            background-color: #ff758f;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            box-shadow: 0 4px 10px rgba(255, 117, 143, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .continue-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ==================== نافذة الفيديو والذكريات المنبثقة ==================== */
         .modal {
             display: none; 
             position: fixed;
@@ -279,7 +348,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.85);
             z-index: 100; 
             justify-content: center;
             align-items: center;
@@ -395,13 +464,11 @@
 
     <video id="bg-music" src="sound.mp4" loop style="display:none;"></video>
 
-    <!-- شاشة الجواب -->
     <div id="envelope-screen" onclick="openEnvelope()">
         <div class="envelope-text">hey babe!</div>
         <div class="envelope"></div>
     </div>
 
-    <!-- المحتوى الرئيسي -->
     <div id="main-content">
         <div class="date-ribbon">
             <img src="date.jpeg" alt="2-8-2004">
@@ -421,28 +488,43 @@
         </button>
     </div>
 
-    <!-- نافذة ادخال الباسورد -->
     <div id="password-modal">
         <div class="pass-box">
             <span class="close-pass-modal" onclick="closePassModal()">&times;</span>
-            <h3>الباسورد هو اجمل يوم في حياتك
-             <br> hint:my brithdaaay</h3>
-            <input type="text" id="pass-input" placeholder="DD/MM" onkeypress="handleKeyPress(event)">
-            <br>
-            <button onclick="checkPassword()">Enter</button>
-            <div id="pass-error">la ya ano kol 5raa</div>
+            <h3>الباسورد هو أجمل يوم في حياتك 🌸</h3>
+            <div class="hint-text">hint: my birthday (0502)</div>
+            
+            <div id="pin-display" class="pin-display"></div>
+
+            <div class="keypad">
+                <button class="key-btn" onclick="pressNum('1')">1</button>
+                <button class="key-btn" onclick="pressNum('2')">2</button>
+                <button class="key-btn" onclick="pressNum('3')">3</button>
+                <button class="key-btn" onclick="pressNum('4')">4</button>
+                <button class="key-btn" onclick="pressNum('5')">5</button>
+                <button class="key-btn" onclick="pressNum('6')">6</button>
+                <button class="key-btn" onclick="pressNum('7')">7</button>
+                <button class="key-btn" onclick="pressNum('8')">8</button>
+                <button class="key-btn" onclick="pressNum('9')">9</button>
+                <button class="key-btn action" onclick="clearPin()">C</button>
+                <button class="key-btn" onclick="pressNum('0')">0</button>
+                <button class="key-btn action" onclick="checkPin()">OK</button>
+            </div>
+
+            <div id="pass-error">la ya ano kol 5raa 😂</div>
         </div>
     </div>
 
-    <!-- نافذة الفيديو والذكريات -->
+    <div id="success-modal">
+        <div class="success-card">
+            <h2>🌸 شطوور يا انوس 🌸</h2>
+            <button class="continue-btn" onclick="proceedToVideo()">شوف المفاجأة 💖</button>
+        </div>
+    </div>
+
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeVideoModal()">&times;</span>
-            
-            <!-- الرسالة المبهجة فوق الفيديو -->
-            <div id="successMessage" class="success-msg">
-              🌸 شطوور يا انوس
-            </div>
 
             <div class="video-text-container">
                 <video id="surprise-video" src="vi.mp4" controls></video>
@@ -472,6 +554,8 @@
     </div>
 
 <script>
+    let currentPin = "";
+
     const fullText = "Being with you is truly one of the best things that has ever happened to me. From the moment you came into my life, everything started to feel brighter and closer to my heart. \n\nThank you for loving me, for supporting me even when things are difficult, and for always reminding me that I'm not alone. You make ordinary days feel special just by being there. \n\nI'm so grateful for every laugh we share, every memory we create, and every moment we spend together. You have a way of making my heart feel safe and happy at the same time. Your kindness, the way you support me, stand by my side, and care for my best interest only make you closer and dearer to my heart. \n\nThank you for being my lifelong companion and my best friend. I'm so lucky that we are together. Happy Birthday again, my love. I love you more than words can ever explain. ❤️";
 
     function openEnvelope() {
@@ -518,9 +602,9 @@
         typeNextWord();
     }
 
-    /* === وظائف نافذة الباسورد === */
+    /* === وظائف الكيباد والباسورد === */
     function askPassword() {
-        document.getElementById('pass-input').value = '';
+        clearPin();
         document.getElementById('pass-error').style.display = 'none';
         document.getElementById('password-modal').style.display = 'flex';
     }
@@ -529,42 +613,52 @@
         document.getElementById('password-modal').style.display = 'none';
     }
 
-    function handleKeyPress(e) {
-        if (e.key === 'Enter') {
-            checkPassword();
+    function pressNum(num) {
+        if (currentPin.length < 8) {
+            currentPin += num;
+            updateDisplay();
         }
     }
 
-    /* === التحقق من الباسورد وتشغيل الاحتفال === */
-    function checkPassword() {
-        const val = document.getElementById('pass-input').value.trim();
-        
-        // التأكد من الباسورد
-        if (val === "5/2" || val === "05/02" || val === "5-2" || val === "5/2/2008" || val === "5-2-2008") {
-            // 1. إغلاق نافذة الباسورد
+    function clearPin() {
+        currentPin = "";
+        updateDisplay();
+        document.getElementById('pass-error').style.display = 'none';
+    }
+
+    function updateDisplay() {
+        document.getElementById('pin-display').innerText = currentPin || "• • • •";
+    }
+
+    function checkPin() {
+        if (currentPin === "0502" || currentPin === "52" || currentPin === "502" || currentPin === "28" || currentPin === "0208") {
             closePassModal();
 
-            // 2. إطلاق فرقعة الورد والقلوب 🎉🌸
+            // 🌸 فرقعة ورود باللون البينك والأبيض 🤍🌸
             if (typeof confetti === 'function') {
                 confetti({
-                    particleCount: 150,
-                    spread: 80,
+                    particleCount: 180,
+                    spread: 90,
                     origin: { y: 0.6 },
-                    colors: ['#ff69b4', '#ff1493', '#ffb6c1', '#ffd700', '#ffffff']
+                    colors: ['#ffb6c1', '#ffffff', '#ff69b4', '#fbcad4', '#fff0f5']
                 });
             }
 
-            // 3. فتح نافذة الفيديو وإظهار الرسالة
-            openVideoModal();
-
+            // إظهار نافذة "شطوور يا انوس" بشكل منفصل أولاً
+            document.getElementById('success-modal').style.display = 'flex';
         } else {
             document.getElementById('pass-error').style.display = 'block';
         }
     }
 
+    /* الانتقال من نافذة "شطوور يا انوس" إلى الفيديو */
+    function proceedToVideo() {
+        document.getElementById('success-modal').style.display = 'none';
+        openVideoModal();
+    }
+
     /* === وظائف نافذة الفيديو === */
     function openVideoModal() {
-        document.getElementById('successMessage').style.display = 'block'; // إظهار الجملة
         document.getElementById('video-modal').style.setProperty('display', 'flex', 'important');
         
         const music = document.getElementById('bg-music');
