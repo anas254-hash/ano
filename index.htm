@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Amiri&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Amiri&family=Cairo:wght@600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>brithday anos</title>
-	
+    <title>birthday anos</title>
+    
     <style>
         /* الإعدادات العامة للموقع - البداية بخلفية بيضاء */
         body {
-            background-color: #ffffff; /* الخلفية برة بيضاء تماماً */
+            background-color: #ffffff;
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,36 +20,14 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            transition: background-color 0.5s ease; /* تنقل ناعم للألوان */
+            transition: background-color 0.5s ease;
         }
-		/* ضبط الشاشات الصغيرة للموبايل - يمنع صغر حجم الفيديو ويحافظ على التناسق */
-        @media (max-width: 600px) {
-            .video-text-container {
-                flex-direction: row-reverse !important; /* يفضلوا جنب بعض */
-                gap: 12px; /* مسافة مناسبة */
-                align-items: center !important; /* يخليهم في نص مستوى بعض بالظبط */
-            }
-            .modal video {
-                
-                width: auto !important; /* يخلي العرض يتظبط تلقائي بناءً على الطول الجديد */
-                max-width: 45% !important; /* يضمن إنه مياخدش أكتر من مساحته جنب الكلام */
-                height: 300px !important; /* كبرنا الطول هنا لـ 320px عشان يطول ويبقى واضح جداً */
-                
-            
-            }
-            .modal-tex {
-                font-size: 13px !important; /* حجم مناسب جداً للكلام العربي عشان يفرش براحته جنب الفيديو */
-                line-height: 1.5;
-                width: 55% !important;
-            }
-            #t {
-                font-size: 24px;
-            }
+
+        #t {
+            font-weight: bold;
+            font-family: 'Bungee', sans-serif;
+            font-size: 32px;
         }
-		#t{font-weight:bold;
-		font-family: 'Bungee', sans-serif;
-font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فالمقاس ده هيكون ممتاز */
-}
 
         /* ستايل شاشة الظرف الخارجي */
         #envelope-screen {
@@ -61,27 +39,24 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             cursor: pointer;
         }
 
-        /* الكلمة اللي فوق الظرف */
         .envelope-text {
-            margin-bottom: 25px; /* مسافة بين الكلمة والظرف */
+            margin-bottom: 25px;
             font-size: 28px;
             color: #cccccc!important;
             font-weight: bold;
             letter-spacing: 1px;
         }
 
-        /* جسم الجواب المستطيل */
         .envelope {
             position: relative;
             width: 280px; 
             height: 180px;
-            background-color: #fbcad4; /* نفس لون الباكجروند اللي جوة بالظبط */
+            background-color: #ffd1dc;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             transition: transform 0.3s ease;
         }
 
-        /* غطاء الجواب المثلث */
         .envelope::before {
             content: '';
             position: absolute;
@@ -97,7 +72,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             z-index: 2;
         }
 
-        /* قفل القلب الأبيض في المنتصف */
         .envelope::after {
             content: '🤍'; 
             position: absolute;
@@ -113,22 +87,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             transform: scale(1.05);
         }
 
-        /* الكلمة اللي تحت الظرف */
-        .envelope-text {
-            margin-top: 50px;
-            font-size: 18px;
-            color: #ff758f;
-            font-weight: bold;
-            letter-spacing: 1px;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-8px); }
-            60% { transform: translateY(-4px); }
-        }
-
         /* المحتوى الرئيسي للموقع */
         #main-content {
             display: none;
@@ -137,10 +95,9 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             text-align: center;
             padding: 120px 20px 100px 20px;
             box-sizing: border-box;
-            position: relative; /* حبس التاريخ والشمعة جوة المحتوى ده عشان ميعوموش */
+            position: relative;
         }
 
-        /* شريطة التاريخ - تم تغييرها لـ absolute لثباتها */
         .date-ribbon {
             position: absolute;
             top: 20px;
@@ -153,7 +110,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             height: auto;
         }
 
-        /* شمعة العمر - تم تغييرها لـ absolute لثباتها */
         .age-candles {
             position: absolute;
             bottom: 20px;
@@ -166,7 +122,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             height: auto;
         }
 
-        /* صورة الشخص */
         .profile-img {
             width: 250px;
             height: 250px;
@@ -174,22 +129,19 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             margin-bottom: 25px;
         }
 
-        /* صندوق الكلام وتأثير الكتابة */
         .love-letter {
             color: white;
-            font-size: 18px;
             line-height: 1.8;
             text-align: left;
             direction: ltr;
             margin-bottom: 40px;
             min-height: 200px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.1); 
-			font-family: 'Lobster Two', Georgia, serif;
+            font-family: 'Lobster Two', Georgia, serif;
             font-size: 22px; 
             font-weight: bold; 
         }
 
-        /* زرار تشغيل الفيديو في الأسفل */
         .video-trigger-btn {
             background-color: white;
             color: #ff758f;
@@ -210,9 +162,118 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             transform: scale(1.05);
         }
 
+        /* ==================== نافذة الباسورد (Password Modal) ==================== */
+        #password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 150;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pass-box {
+            background: #ffd1dc;
+            padding: 30px 25px;
+            border-radius: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 340px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            position: relative;
+            animation: popup 0.3s ease-out;
+            border: 2px solid #ffffff;
+        }
+
+        @keyframes popup {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .pass-box h3 {
+            margin: 0 0 15px 0;
+            color: #d6336c;
+            font-family: 'Cairo', sans-serif;
+            font-size: 20px;
+            direction: rtl;
+        }
+
+        .pass-box input {
+            width: 80%;
+            padding: 10px 15px;
+            border: 2px solid #ffb6c1;
+            border-radius: 12px;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-family: 'Cairo', sans-serif;
+            color: #495057;
+            background: #ffffff;
+            transition: border-color 0.2s;
+        }
+
+        .pass-box input:focus {
+            border-color: #ff758f;
+        }
+
+        .pass-box button {
+            background: #ff758f;
+            color: white;
+            border: none;
+            padding: 8px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .pass-box button:hover {
+            background: #e65c7b;
+            transform: scale(1.03);
+        }
+
+        .close-pass-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 22px;
+            color: #d6336c;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #pass-error {
+            color: #e63946;
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+        }
+
+        /* رسالة النجاح داخل الـ Modal */
+        .success-msg {
+            display: none;
+            font-size: 22px;
+            color: #ff758f;
+            font-family: 'Cairo', sans-serif;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            animation: popup 0.5s ease-out;
+        }
+
         /* نافذة الفيديو والذكريات المنبثقة */
         .modal {
-            display: none !important; 
+            display: none; 
             position: fixed;
             top: 0;
             left: 0;
@@ -224,7 +285,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             align-items: center;
         }
 
-        /* صندوق المحتوى الأبيض */
         .modal-content {
             position: relative;
             width: 95%;
@@ -238,21 +298,10 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
-        .modal-text {
-            flex: 1; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            font-size: 22px; 
-            color: #ff758f;
-            line-height: 1.6;
-            text-align: right; 
-            direction: rtl;    
-            padding: 0px;
-        }
-		
         .modal-tex {
             flex: 1; 
             font-family: 'Amiri', serif !important; 
-            font-size: 18px; /* صغرنا الخط سنة للموبايل عشان يريح المساحة */
+            font-size: 18px;
             color:#cccccc ;
             line-height: 1.5;
             text-align: right; 
@@ -260,7 +309,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             padding: 0px;
         }
 
-        /* معرض الصور بالأسفل */
         .modal-gallery {
             width: 100%;
             margin-top: 25px;
@@ -271,7 +319,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             align-items: center !important;
         }
 
-        /* ستايل مخصص وقوي جداً للاسم الجديد */
         #special-gallery-text {
             display: block !important;
             visibility: visible !important;
@@ -282,26 +329,24 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             font-weight: bold !important;
             line-height: 1.6 !important;
             font-family: 'Bungee', sans-serif;
-			text-align: center;
+            text-align: center;
             margin-top: 10px !important;
             margin-bottom: 25px !important; 
             padding: 0 15px !important;
             box-sizing: border-box !important;
         }
 
-        /* حاوية تجمع الفيديو والنص جنب بعض بالظبط */
         .video-text-container {
             display: flex;
-            flex-direction: row-reverse; /* يخلي الفيديو على اليمين والنص على الشمال */
-            align-items: flex-start; /* موازاتهم من الأعلى للحفاظ على التناسق */
+            flex-direction: row-reverse;
+            align-items: flex-start;
             gap: 20px; 
             margin-bottom: 25px;
             width: 100%;
         }
 
-        /* ضبط أبعاد الفيديو */
         .modal video {
-            width: 45%; /* تقليل النسبة لضمان وجود مساحة كافية للكلام بجانبه */
+            width: 45%;
             max-width: 320px;
             height: auto;
             border-radius: 15px;
@@ -309,7 +354,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
-        /* ستايل الصورة المجمعة */
         .modal-gallery img {
             width: 100%; 
             height: auto; 
@@ -319,7 +363,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
-        /* زر الإغلاق */
         .close-modal {
             position: absolute;
             top: 15px;
@@ -330,37 +373,36 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
             z-index: 30;
         }
 
-        /* ضبط الشاشات الصغيرة للموبايل - يمنع النزول تحت ويحافظ على وجودهم جنب بعض */
         @media (max-width: 600px) {
             .video-text-container {
-                flex-direction: row-reverse !important; /* إجبار المحاذاة الأفقية جنب بعض حتى في الموبايل */
-                gap: 10px; /* تقليل المسافة لتوفير مساحة */
+                flex-direction: row-reverse !important;
+                gap: 10px;
             }
             .modal video {
-                width: 40% !important; /* حجم الفيديو في الموبايل عشان يسيب مساحة للنص */
+                width: 40% !important;
             }
             .modal-tex {
-                font-size: 14px !important; /* تصغير الفونت العربي قليلاً ليناسب العرض الجانبي في الموبايل */
+                font-size: 14px !important;
                 line-height: 1.4;
             }
             #t {
-                font-size: 24px; /* تصغير عنوان الـ Birthday للموبايل */
+                font-size: 24px;
             }
         }
-		
     </style>
 </head>
 <body>
 
     <video id="bg-music" src="sound.mp4" loop style="display:none;"></video>
 
+    <!-- شاشة الجواب -->
     <div id="envelope-screen" onclick="openEnvelope()">
         <div class="envelope-text">hey babe!</div>
         <div class="envelope"></div>
     </div>
 
+    <!-- المحتوى الرئيسي -->
     <div id="main-content">
-        
         <div class="date-ribbon">
             <img src="date.jpeg" alt="2-8-2004">
         </div>
@@ -370,41 +412,60 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
         </div>
 
         <img src="s.png" alt="Birthday Boy" class="profile-img">
-        <div id="t">Happy brithday ano❣️</div>
+        <div id="t">Happy birthday ano❣️</div>
         
         <div id="typewriter-text" class="love-letter"></div>
 
-        <button class="video-trigger-btn" onclick="openVideoModal()">
+        <button class="video-trigger-btn" onclick="askPassword()">
             Click ya anosii❣️
         </button>
     </div>
 
+    <!-- نافذة ادخال الباسورد -->
+    <div id="password-modal">
+        <div class="pass-box">
+            <span class="close-pass-modal" onclick="closePassModal()">&times;</span>
+            <h3>الباسورد هو اجمل يوم في حياتك
+             <br> hint:my brithdaaay</h3>
+            <input type="text" id="pass-input" placeholder="DD/MM" onkeypress="handleKeyPress(event)">
+            <br>
+            <button onclick="checkPassword()">Enter</button>
+            <div id="pass-error">la ya ano kol 5raa</div>
+        </div>
+    </div>
+
+    <!-- نافذة الفيديو والذكريات -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeVideoModal()">&times;</span>
             
+            <!-- الرسالة المبهجة فوق الفيديو -->
+            <div id="successMessage" class="success-msg">
+              🌸 شطوور يا انوس
+            </div>
+
             <div class="video-text-container">
                 <video id="surprise-video" src="vi.mp4" controls></video>
                 
                 <div class="modal-tex">
-				كل سنه وانت طيب يحبيبي💕.
-		        <br>
-                يارب تكون بخير دوم ووياي ومع كل اللي تحبهم ولا يحرمنا منك يارب وتكون كل ايامك حلوه وتتخرج هاي السنه وتطلع بأعلى معدل يارب وتكون احلى واشطر محامي اشوفو ,اللي ابيك تعرفه انك غالي علي وعلى قلبي ولا احد جه ولا رح يجي وياخد مكانك انا وانت عشره عمر صدق ارتاحلك واحكيلك واحب كلامنا سوا انا صدق مره احبك واموت عليك 
+                كل سنه وانت طيب يحبيبي💕.
+                <br>
+                يارب تكون بخير دوم ووياي ومع كل اللي تحبهم ولا يحرمنا منك يارب وتكون كل ايامك حلوه وتتخرج هاي السنه وتطلع بأعلى معدل يارب وتكون احلى واشطر محامي اشوفو اعرف ان الضغط عليك مره عالي بس كلنا ندري انك قدها وفخورين فيك وبنحبك كل الاحوال ,اللي ابيك تعرفه انك غالي علي وعلى قلبي ولا احد جه ولا رح يجي وياخد مكانك انا وياك عشره عمر يعيوني , ارتاحلك واحكيلك رغم اني كثير بحكي وبزعجك بس يلا فداي صح ؟؟؟ بحب كلامنا سوا انا صدق مره احبك الله يعلم محبتك عندي شنو واموت عليك 
                 ولسه ابي شكلاته للحين ترا.
                 <br>
-                هذا ثاني عيدميلاد لك واحنا سوا صدق مرت الايام بسرعه ولا حسيت فيها رغم انك مستفز بس يا حلو الايام بيك واعرفك ما تغار انت بس تنصحني          
+                هذا ثاني عيدميلاد لك واحنا سوا لمن الحمدلله كبرنا مرت الايام بسرعه ولا حسيت فيها رغم انك مستفز بس يا حلو الايام بيك واي اي اعرفك ما تغار انت بس تنصحني         
                 <img src="tli.gif" alt="gif" style="display:inline-block; max-width: 80px; height:auto; margin-top:9px;"> 
                 <br>
-                بس والله صدق الشوق لك غلاب ,كلشي سويته هنا سويته لاني يمكن هالشي يبسطك وهسه  
-                انا بتاريخ 7\7 بس انت هتشوفو بعد شهر وكلي حماس والله وياريت يسعدك 
+                بس والله صدق الشوق لك دافع لكل شي مهما اقول لالا زعلني ما بكلمه ارجع واكلمك ,كلشي سويته هنا سويته لاني يمكن هالشي يبسطك وسط كل هالتعب اللي بتمر فيه وهسه  
+                 انا بتاريخ 7\7 بس انت هتشوفو بعد شهر وكلي حماس والله وياريت تنبسط فيه واذا ضحكت صورلي الضحكه تكفى فديتها انا
                 <br>
-                وبس بحبك انوسي❣️.                                                                                                                                                                               
-                بس متى هناكل برجر سوا؟
+                     وبس بحبك انوسي❣️. 
+                    بس متى هناكل برجر سوا؟
                 </div>
             </div>
             
             <div class="modal-gallery">
-			    <div id="special-gallery-text">"These are some of the memories that I have never forgotten—they are held deeply in my heart long before they were ever saved on my phone. Always be sure of one thing, I love u ❣️"</div>
+                <div id="special-gallery-text">"These are some of the memories that I have never forgotten—they are held deeply in my heart long before they were ever saved on my phone. Always be sure of one thing, I love u ❣️"</div>
                 <img src="pic.jpg" alt="Memory">
             </div>
         </div>
@@ -426,7 +487,7 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
 
         document.getElementById('envelope-screen').style.display = 'none';
         document.getElementById('main-content').style.display = 'block'; 
-        document.body.style.backgroundColor = '#fbcad4'; 
+        document.body.style.backgroundColor = '#ffd1dc';
         startWordByWordTyping();
 
         const music = document.getElementById('bg-music');
@@ -451,14 +512,61 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
                 
                 container.innerHTML += wordToShow + ' ';
                 index++;
-                setTimeout(typeNextWord, 250); 
+                setTimeout(typeNextWord, 200); 
             }
         }
         typeNextWord();
     }
 
+    /* === وظائف نافذة الباسورد === */
+    function askPassword() {
+        document.getElementById('pass-input').value = '';
+        document.getElementById('pass-error').style.display = 'none';
+        document.getElementById('password-modal').style.display = 'flex';
+    }
+
+    function closePassModal() {
+        document.getElementById('password-modal').style.display = 'none';
+    }
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            checkPassword();
+        }
+    }
+
+    /* === التحقق من الباسورد وتشغيل الاحتفال === */
+    function checkPassword() {
+        const val = document.getElementById('pass-input').value.trim();
+        
+        // التأكد من الباسورد
+        if (val === "5/2" || val === "05/02" || val === "5-2" || val === "5/2/2008" || val === "5-2-2008") {
+            // 1. إغلاق نافذة الباسورد
+            closePassModal();
+
+            // 2. إطلاق فرقعة الورد والقلوب 🎉🌸
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 150,
+                    spread: 80,
+                    origin: { y: 0.6 },
+                    colors: ['#ff69b4', '#ff1493', '#ffb6c1', '#ffd700', '#ffffff']
+                });
+            }
+
+            // 3. فتح نافذة الفيديو وإظهار الرسالة
+            openVideoModal();
+
+        } else {
+            document.getElementById('pass-error').style.display = 'block';
+        }
+    }
+
+    /* === وظائف نافذة الفيديو === */
     function openVideoModal() {
+        document.getElementById('successMessage').style.display = 'block'; // إظهار الجملة
         document.getElementById('video-modal').style.setProperty('display', 'flex', 'important');
+        
         const music = document.getElementById('bg-music');
         if (music) music.volume = 0.2; 
         
@@ -467,7 +575,6 @@ font-size: 32px; /* خط Bungee بيبقى عريض وكبير طبيعي فال
     }
 
     function closeVideoModal() {
-        document.getElementById('video-modal').style.setProperty('important', 'none'); // تصحيح تيكنيكال صغير لإغلاق المودال بشكل سليم
         document.getElementById('video-modal').style.setProperty('display', 'none', 'important');
         const video = document.getElementById('surprise-video');
         if (video) {
