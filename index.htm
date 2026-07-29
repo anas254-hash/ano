@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Amiri&family=Cairo:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Amiri&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>birthday anos</title>
     
     <style>
-        /* الإعدادات العامة للموقع */
         body {
             background-color: #ffffff;
             margin: 0;
@@ -29,7 +28,7 @@
             font-size: 32px;
         }
 
-        /* ستايل شاشة الظرف الخارجي */
+        /* شاشة الظرف */
         #envelope-screen {
             display: flex;
             flex-direction: column;
@@ -87,7 +86,7 @@
             transform: scale(1.05);
         }
 
-        /* المحتوى الرئيسي للموقع */
+        /* المحتوى الرئيسي */
         #main-content {
             display: none;
             width: 100%;
@@ -156,13 +155,14 @@
             align-items: center;
             gap: 10px;
             transition: transform 0.2s;
+            font-family: 'Cairo', sans-serif;
         }
 
         .video-trigger-btn:hover {
             transform: scale(1.05);
         }
 
-        /* ==================== نافذة السؤال ==================== */
+        /* نافذة السؤال */
         #quiz-modal {
             display: none;
             position: fixed;
@@ -170,8 +170,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(8px);
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
             z-index: 150;
             justify-content: center;
             align-items: center;
@@ -182,9 +182,9 @@
             padding: 30px 25px;
             border-radius: 25px;
             text-align: center;
-            width: 88%;
-            max-width: 330px;
-            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
+            width: 85%;
+            max-width: 320px;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.5);
             position: relative;
             animation: popup 0.3s ease-out;
             border: 2px solid #ffffff;
@@ -215,11 +215,6 @@
             color: #d6336c;
             background: #ffffff;
             margin-bottom: 15px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
-        }
-
-        .quiz-input:focus {
-            border-color: #ff758f;
         }
 
         .submit-quiz-btn {
@@ -233,11 +228,6 @@
             cursor: pointer;
             font-family: 'Cairo', sans-serif;
             box-shadow: 0 4px 10px rgba(255, 117, 143, 0.3);
-            transition: transform 0.2s;
-        }
-
-        .submit-quiz-btn:hover {
-            transform: scale(1.05);
         }
 
         .close-quiz-modal {
@@ -260,7 +250,7 @@
             font-weight: bold;
         }
 
-        /* ==================== خلفية الورود البينك والأبيض ==================== */
+        /* ==================== تأثير انضباط باقة الورود الكثيفة (TikTok Bloom Effect) ==================== */
         #roses-overlay {
             display: none;
             position: fixed;
@@ -273,38 +263,67 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            animation: fadeIn 0.4s ease-in-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* الورود المتحركة بالخلفية */
-        .rose-flower {
+        /* خلفية الباقات والورود المتفتحة البينك والأبيض */
+        .blooming-bouquet {
             position: absolute;
-            font-size: 45px;
-            animation: floatRose 3s infinite ease-in-out alternate;
-            user-select: none;
+            width: 140vmax;
+            height: 140vmax;
+            background: 
+                radial-gradient(circle at 50% 50%, #fff 0%, transparent 40%),
+                radial-gradient(circle at 35% 35%, #ffb6c1 0%, transparent 25%),
+                radial-gradient(circle at 65% 35%, #ff85a1 0%, transparent 25%),
+                radial-gradient(circle at 35% 65%, #ffccd5 0%, transparent 25%),
+                radial-gradient(circle at 65% 65%, #fff0f5 0%, transparent 25%),
+                radial-gradient(circle at 50% 20%, #ff4d6d 0%, transparent 30%),
+                radial-gradient(circle at 50% 80%, #ff758f 0%, transparent 30%);
+            border-radius: 50%;
+            animation: bloomExpand 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            opacity: 0.95;
         }
 
-        @keyframes floatRose {
-            0% { transform: scale(0.9) rotate(-5deg); }
-            100% { transform: scale(1.15) rotate(10deg); }
+        @keyframes bloomExpand {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.98; }
         }
 
-        /* ==================== النشرة/المربع الصغير جداً ==================== */
+        /* ورود تفصيلية شفافة متداخلة لتجسيم الورود باللون البينك والأبيض */
+        .rose-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle, #ffffff 15px, transparent 16px),
+                radial-gradient(circle, #ffb6c1 25px, transparent 26px),
+                radial-gradient(circle, #ff4d79 35px, transparent 36px);
+            background-size: 90px 90px;
+            background-position: 0 0, 45px 45px, 20px 70px;
+            opacity: 0.8;
+            animation: rotateRoses 10s linear infinite;
+        }
+
+        @keyframes rotateRoses {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.05); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        /* المربع الصغير جداً للتهنئة فوق الورود */
         .tiny-popup {
-            background: rgba(255, 255, 255, 0.95);
-            border: 3px solid #ffb6c1;
-            padding: 15px 25px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.92);
+            border: 2px solid #ff758f;
+            padding: 16px 24px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
-            z-index: 210;
-            animation: popTiny 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-width: 260px;
+            box-shadow: 0 10px 30px rgba(214, 51, 108, 0.3);
+            z-index: 220;
+            animation: popTiny 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards;
+            opacity: 0;
+            transform: scale(0.3);
+            max-width: 250px;
         }
 
         @keyframes popTiny {
@@ -314,15 +333,15 @@
 
         .tiny-popup h4 {
             margin: 0;
-            color: #ff4d6d;
+            color: #d6336c;
             font-family: 'Cairo', sans-serif;
             font-size: 17px;
-            font-weight: bold;
+            font-weight: 800;
             direction: rtl;
             line-height: 1.5;
         }
 
-        /* ==================== نافذة الفيديو والذكريات المنبثقة ==================== */
+        /* نافذة الفيديو */
         .modal {
             display: none; 
             position: fixed;
@@ -473,24 +492,20 @@
     <div id="quiz-modal">
         <div class="quiz-box">
             <span class="close-quiz-modal" onclick="closeQuizModal()">&times;</span>
-            <h3>تحب مين أكثر حدا؟ 🌸</h3>
-            <input type="text" id="answer-input" class="quiz-input" placeholder="اكتب إجابتك هنا..." onkeydown="if(event.key==='Enter') checkAnswer()">
+            <h3>تحب مين أكثر حدا؟ </h3>
+            <input type="text" id="answer-input" class="quiz-input" placeholder="..." onkeydown="if(event.key==='Enter') checkAnswer()">
             <br>
-            <button class="submit-quiz-btn" onclick="checkAnswer()">تأكيد ✨</button>
-            <div id="quiz-error">laaa kol 5raa</div>
+            <button class="submit-quiz-btn" onclick="checkAnswer()">صح لو لا؟</button>
+            <div id="quiz-error">la kol 5raa/div>
         </div>
     </div>
 
     <div id="roses-overlay">
-        <span class="rose-flower" style="top:10%; left:10%;">🌸</span>
-        <span class="rose-flower" style="top:15%; right:15%;">🤍</span>
-        <span class="rose-flower" style="top:70%; left:12%;">🤍</span>
-        <span class="rose-flower" style="top:75%; right:10%;">🌸</span>
-        <span class="rose-flower" style="top:40%; left:5%;">🌸</span>
-        <span class="rose-flower" style="top:45%; right:5%;">🤍</span>
+        <div class="blooming-bouquet"></div>
+        <div class="rose-layer"></div>
 
         <div class="tiny-popup">
-            <h4>شطوور يا انوس وأنا اموت عليج 🌸🤍</h4>
+            <h4>شطوور يا انوس وأنا اموت عليج 🌸</h4>
         </div>
     </div>
 
@@ -572,7 +587,6 @@
         typeNextWord();
     }
 
-    /* === نافذة السؤال === */
     function askQuestion() {
         document.getElementById('answer-input').value = "";
         document.getElementById('quiz-error').style.display = 'none';
@@ -586,37 +600,34 @@
     function checkAnswer() {
         const inputVal = document.getElementById('answer-input').value.trim().toLowerCase();
 
-        // التثبت من الإجابة (رودي أو أنتِ أو انتي)
-        if (inputVal === "رودي" || inputVal === "أنتِ" || inputVal === "انتي" || inputVal === "انتي" || inputVal === "رودي ") {
+        if (inputVal === "رودي" || inputVal === "أنتِ" || inputVal === "انتي") {
             closeQuizModal();
 
-            // 1. فرقعة ورود وردي وأبيض
+            // فرقعة ورود
             if (typeof confetti === 'function') {
                 confetti({
-                    particleCount: 200,
-                    spread: 100,
-                    origin: { y: 0.6 },
-                    colors: ['#ffb6c1', '#ffffff', '#ff69b4', '#fbcad4', '#fff0f5']
+                    particleCount: 220,
+                    spread: 120,
+                    origin: { y: 0.5 },
+                    colors: ['#ffb6c1', '#ffffff', '#ff69b4', '#fff0f5']
                 });
             }
 
-            // 2. إظهار شاشة الورود والمربع الصغير
+            // تفتح وتفتح الورود البينك والأبيض
             const rosesOverlay = document.getElementById('roses-overlay');
             rosesOverlay.style.display = 'flex';
 
-            // 3. يختفي شاشة الورود والمربع تلقائياً بعد ثانيتين وتفتح نافذة الفيديو!
+            // يختفي بعد 3 ثوانٍ ويفتح الفيديو
             setTimeout(() => {
                 rosesOverlay.style.display = 'none';
                 openVideoModal();
-            }, 2500);
+            }, 3000);
 
         } else {
-            // الإجابة خطأ
             document.getElementById('quiz-error').style.display = 'block';
         }
     }
 
-    /* === وظائف نافذة الفيديو === */
     function openVideoModal() {
         document.getElementById('video-modal').style.setProperty('display', 'flex', 'important');
         
@@ -641,3 +652,4 @@
     
 </body>
 </html>
+  
