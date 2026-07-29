@@ -8,7 +8,7 @@
     <title>birthday anos</title>
     
     <style>
-        /* الإعدادات العامة للموقع - البداية بخلفية بيضاء */
+        /* الإعدادات العامة للموقع */
         body {
             background-color: #ffffff;
             margin: 0;
@@ -162,8 +162,8 @@
             transform: scale(1.05);
         }
 
-        /* ==================== لوحة الأرقام (Keypad Password) ==================== */
-        #password-modal {
+        /* ==================== نافذة السؤال ==================== */
+        #quiz-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -177,13 +177,13 @@
             align-items: center;
         }
 
-        .pass-box {
-            background: rgba(255, 230, 238, 0.95);
-            padding: 25px 20px;
+        .quiz-box {
+            background: #fff0f5;
+            padding: 30px 25px;
             border-radius: 25px;
             text-align: center;
             width: 88%;
-            max-width: 320px;
+            max-width: 330px;
             box-shadow: 0 15px 35px rgba(255, 182, 193, 0.4);
             position: relative;
             animation: popup 0.3s ease-out;
@@ -195,139 +195,39 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        .pass-box h3 {
-            margin: 0 0 8px 0;
+        .quiz-box h3 {
+            margin: 0 0 18px 0;
             color: #d6336c;
             font-family: 'Cairo', sans-serif;
-            font-size: 18px;
+            font-size: 20px;
             direction: rtl;
         }
 
-        .pass-box .hint-text {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 12px;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .pin-display {
-            background: #ffffff;
+        .quiz-input {
+            width: 85%;
+            padding: 12px 15px;
             border: 2px solid #ffb6c1;
-            border-radius: 15px;
-            padding: 8px 15px;
-            font-size: 22px;
-            letter-spacing: 5px;
-            color: #ff758f;
-            font-weight: bold;
-            min-height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .keypad {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 0 10px;
-        }
-
-        .key-btn {
-            background: #ffffff;
-            color: #d6336c;
-            border: 2px solid #ffe3eb;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 12px 0;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            margin: 0 auto;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(255, 117, 143, 0.15);
-            transition: all 0.15s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 20px;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
             font-family: 'Cairo', sans-serif;
+            color: #d6336c;
+            background: #ffffff;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
         }
 
-        .key-btn:active {
-            transform: scale(0.9);
+        .quiz-input:focus {
+            border-color: #ff758f;
+        }
+
+        .submit-quiz-btn {
             background: #ff758f;
             color: white;
-        }
-
-        .key-btn.action {
-            font-size: 14px;
-            background: #fff0f5;
-            color: #ff758f;
-            border-radius: 15px;
-            width: 100%;
-            height: 55px;
-        }
-
-        .close-pass-modal {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 22px;
-            color: #d6336c;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #pass-error {
-            color: #e63946;
-            font-size: 13px;
-            margin-top: 12px;
-            display: none;
-            font-family: 'Cairo', sans-serif;
-            direction: rtl;
-        }
-
-        /* ==================== نافذة التهنئة المباشرة (شطوور يا انوس) ==================== */
-        #success-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 180;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .success-card {
-            background: #ffffff;
-            padding: 30px 25px;
-            border-radius: 25px;
-            text-align: center;
-            width: 80%;
-            max-width: 300px;
-            box-shadow: 0 10px 30px rgba(255, 117, 143, 0.3);
-            animation: popup 0.4s ease-out;
-            border: 3px solid #ffb6c1;
-        }
-
-        .success-card h2 {
-            margin: 0 0 15px 0;
-            color: #ff758f;
-            font-family: 'Cairo', sans-serif;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .continue-btn {
-            background-color: #ff758f;
-            color: white;
             border: none;
-            padding: 10px 25px;
-            font-size: 15px;
+            padding: 10px 30px;
+            font-size: 16px;
             font-weight: bold;
             border-radius: 20px;
             cursor: pointer;
@@ -336,8 +236,90 @@
             transition: transform 0.2s;
         }
 
-        .continue-btn:hover {
+        .submit-quiz-btn:hover {
             transform: scale(1.05);
+        }
+
+        .close-quiz-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #d6336c;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #quiz-error {
+            color: #e63946;
+            font-size: 14px;
+            margin-top: 12px;
+            display: none;
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            font-weight: bold;
+        }
+
+        /* ==================== خلفية الورود البينك والأبيض ==================== */
+        #roses-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff5f8;
+            z-index: 200;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* الورود المتحركة بالخلفية */
+        .rose-flower {
+            position: absolute;
+            font-size: 45px;
+            animation: floatRose 3s infinite ease-in-out alternate;
+            user-select: none;
+        }
+
+        @keyframes floatRose {
+            0% { transform: scale(0.9) rotate(-5deg); }
+            100% { transform: scale(1.15) rotate(10deg); }
+        }
+
+        /* ==================== النشرة/المربع الصغير جداً ==================== */
+        .tiny-popup {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #ffb6c1;
+            padding: 15px 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            z-index: 210;
+            animation: popTiny 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 260px;
+        }
+
+        @keyframes popTiny {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .tiny-popup h4 {
+            margin: 0;
+            color: #ff4d6d;
+            font-family: 'Cairo', sans-serif;
+            font-size: 17px;
+            font-weight: bold;
+            direction: rtl;
+            line-height: 1.5;
         }
 
         /* ==================== نافذة الفيديو والذكريات المنبثقة ==================== */
@@ -483,42 +465,32 @@
         
         <div id="typewriter-text" class="love-letter"></div>
 
-        <button class="video-trigger-btn" onclick="askPassword()">
+        <button class="video-trigger-btn" onclick="askQuestion()">
             Click ya anosii❣️
         </button>
     </div>
 
-    <div id="password-modal">
-        <div class="pass-box">
-            <span class="close-pass-modal" onclick="closePassModal()">&times;</span>
-            <h3>الباسورد هو أجمل يوم في حياتك 🌸</h3>
-            <div class="hint-text">hint: my birthday (0502)</div>
-            
-            <div id="pin-display" class="pin-display"></div>
-
-            <div class="keypad">
-                <button class="key-btn" onclick="pressNum('1')">1</button>
-                <button class="key-btn" onclick="pressNum('2')">2</button>
-                <button class="key-btn" onclick="pressNum('3')">3</button>
-                <button class="key-btn" onclick="pressNum('4')">4</button>
-                <button class="key-btn" onclick="pressNum('5')">5</button>
-                <button class="key-btn" onclick="pressNum('6')">6</button>
-                <button class="key-btn" onclick="pressNum('7')">7</button>
-                <button class="key-btn" onclick="pressNum('8')">8</button>
-                <button class="key-btn" onclick="pressNum('9')">9</button>
-                <button class="key-btn action" onclick="clearPin()">C</button>
-                <button class="key-btn" onclick="pressNum('0')">0</button>
-                <button class="key-btn action" onclick="checkPin()">OK</button>
-            </div>
-
-            <div id="pass-error">la ya ano kol 5raa 😂</div>
+    <div id="quiz-modal">
+        <div class="quiz-box">
+            <span class="close-quiz-modal" onclick="closeQuizModal()">&times;</span>
+            <h3>تحب مين أكثر حدا؟ 🌸</h3>
+            <input type="text" id="answer-input" class="quiz-input" placeholder="اكتب إجابتك هنا..." onkeydown="if(event.key==='Enter') checkAnswer()">
+            <br>
+            <button class="submit-quiz-btn" onclick="checkAnswer()">تأكيد ✨</button>
+            <div id="quiz-error">laaa kol 5raa</div>
         </div>
     </div>
 
-    <div id="success-modal">
-        <div class="success-card">
-            <h2>🌸 شطوور يا انوس 🌸</h2>
-            <button class="continue-btn" onclick="proceedToVideo()">شوف المفاجأة 💖</button>
+    <div id="roses-overlay">
+        <span class="rose-flower" style="top:10%; left:10%;">🌸</span>
+        <span class="rose-flower" style="top:15%; right:15%;">🤍</span>
+        <span class="rose-flower" style="top:70%; left:12%;">🤍</span>
+        <span class="rose-flower" style="top:75%; right:10%;">🌸</span>
+        <span class="rose-flower" style="top:40%; left:5%;">🌸</span>
+        <span class="rose-flower" style="top:45%; right:5%;">🤍</span>
+
+        <div class="tiny-popup">
+            <h4>شطوور يا انوس وأنا اموت عليج 🌸🤍</h4>
         </div>
     </div>
 
@@ -554,8 +526,6 @@
     </div>
 
 <script>
-    let currentPin = "";
-
     const fullText = "Being with you is truly one of the best things that has ever happened to me. From the moment you came into my life, everything started to feel brighter and closer to my heart. \n\nThank you for loving me, for supporting me even when things are difficult, and for always reminding me that I'm not alone. You make ordinary days feel special just by being there. \n\nI'm so grateful for every laugh we share, every memory we create, and every moment we spend together. You have a way of making my heart feel safe and happy at the same time. Your kindness, the way you support me, stand by my side, and care for my best interest only make you closer and dearer to my heart. \n\nThank you for being my lifelong companion and my best friend. I'm so lucky that we are together. Happy Birthday again, my love. I love you more than words can ever explain. ❤️";
 
     function openEnvelope() {
@@ -602,59 +572,48 @@
         typeNextWord();
     }
 
-    /* === وظائف الكيباد والباسورد === */
-    function askPassword() {
-        clearPin();
-        document.getElementById('pass-error').style.display = 'none';
-        document.getElementById('password-modal').style.display = 'flex';
+    /* === نافذة السؤال === */
+    function askQuestion() {
+        document.getElementById('answer-input').value = "";
+        document.getElementById('quiz-error').style.display = 'none';
+        document.getElementById('quiz-modal').style.display = 'flex';
     }
 
-    function closePassModal() {
-        document.getElementById('password-modal').style.display = 'none';
+    function closeQuizModal() {
+        document.getElementById('quiz-modal').style.display = 'none';
     }
 
-    function pressNum(num) {
-        if (currentPin.length < 8) {
-            currentPin += num;
-            updateDisplay();
-        }
-    }
+    function checkAnswer() {
+        const inputVal = document.getElementById('answer-input').value.trim().toLowerCase();
 
-    function clearPin() {
-        currentPin = "";
-        updateDisplay();
-        document.getElementById('pass-error').style.display = 'none';
-    }
+        // التثبت من الإجابة (رودي أو أنتِ أو انتي)
+        if (inputVal === "رودي" || inputVal === "أنتِ" || inputVal === "انتي" || inputVal === "انتي" || inputVal === "رودي ") {
+            closeQuizModal();
 
-    function updateDisplay() {
-        document.getElementById('pin-display').innerText = currentPin || "• • • •";
-    }
-
-    function checkPin() {
-        if (currentPin === "0502" || currentPin === "52" || currentPin === "502" || currentPin === "28" || currentPin === "0208") {
-            closePassModal();
-
-            // 🌸 فرقعة ورود باللون البينك والأبيض 🤍🌸
+            // 1. فرقعة ورود وردي وأبيض
             if (typeof confetti === 'function') {
                 confetti({
-                    particleCount: 180,
-                    spread: 90,
+                    particleCount: 200,
+                    spread: 100,
                     origin: { y: 0.6 },
                     colors: ['#ffb6c1', '#ffffff', '#ff69b4', '#fbcad4', '#fff0f5']
                 });
             }
 
-            // إظهار نافذة "شطوور يا انوس" بشكل منفصل أولاً
-            document.getElementById('success-modal').style.display = 'flex';
-        } else {
-            document.getElementById('pass-error').style.display = 'block';
-        }
-    }
+            // 2. إظهار شاشة الورود والمربع الصغير
+            const rosesOverlay = document.getElementById('roses-overlay');
+            rosesOverlay.style.display = 'flex';
 
-    /* الانتقال من نافذة "شطوور يا انوس" إلى الفيديو */
-    function proceedToVideo() {
-        document.getElementById('success-modal').style.display = 'none';
-        openVideoModal();
+            // 3. يختفي شاشة الورود والمربع تلقائياً بعد ثانيتين وتفتح نافذة الفيديو!
+            setTimeout(() => {
+                rosesOverlay.style.display = 'none';
+                openVideoModal();
+            }, 2500);
+
+        } else {
+            // الإجابة خطأ
+            document.getElementById('quiz-error').style.display = 'block';
+        }
     }
 
     /* === وظائف نافذة الفيديو === */
