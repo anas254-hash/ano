@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Amiri&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
             transition: background-color 0.5s ease;
         }
@@ -95,6 +94,7 @@
             padding: 120px 20px 100px 20px;
             box-sizing: border-box;
             position: relative;
+            z-index: 5;
         }
 
         .date-ribbon {
@@ -250,81 +250,45 @@
             font-weight: bold;
         }
 
-        /* ==================== شاشة الورود الكثيفة والأنيميشن ==================== */
-        #roses-overlay {
+        /* ==================== تأثير خلفية بيضاء وتتابع الكلمات بلون بينك فاتح ==================== */
+        #matrix-overlay {
             display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fff0f5;
+            background-color: #ffffff; /* خلفية بيضاء بالكامل */
             z-index: 200;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
 
-        /* خلفية ورود كثيرة ومكررة تملأ الشاشة */
-        .real-roses-bg {
+        #matrix-canvas {
+            display: block;
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('flower.jpg'); 
-            background-size: 300px 300px; /* تكرار الورود بكثافة كثر جداً */
-            background-repeat: repeat;
-            background-position: center;
         }
 
-        /* كلاس أنيميشن الدخول السريع */
-        .roses-enter {
-            animation: bloomIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        /* كلاس أنيميشن الخروج بنفس الحركة العكسية */
-        .roses-exit {
-            animation: bloomOut 0.6s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
-        }
-
-        @keyframes bloomIn {
-            0% { transform: scale(0); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes bloomOut {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: scale(0); opacity: 0; }
-        }
-
-        /* المربع الصغير جداً فوق الورود */
-        .tiny-popup {
+        .matrix-text-box {
             position: relative;
-            background: rgba(255, 255, 255, 0.95);
-            border: 3px solid #ff758f;
-            padding: 16px 24px;
-            border-radius: 20px;
+            z-index: 210;
+            color: #ffb6d5; /* لون بينك فاتح جداً */
+            font-family: 'Bungee', sans-serif;
+            font-size: 55px;
+            font-weight: bold;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 220;
-            animation: popTiny 0.4s ease-out 0.3s forwards;
-            opacity: 0;
-            transform: scale(0.5);
-            max-width: 260px;
+            text-shadow: 0 0 15px rgba(255, 182, 213, 0.5);
+            animation: textPulse 0.8s ease infinite alternate;
         }
 
-        @keyframes popTiny {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .tiny-popup h4 {
-            margin: 0;
-            color: #d6336c;
-            font-family: 'Cairo', sans-serif;
-            font-size: 17px;
-            font-weight: 800;
-            direction: rtl;
-            line-height: 1.5;
+        @keyframes textPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
         }
 
         /* نافذة الفيديو */
@@ -444,6 +408,9 @@
             #t {
                 font-size: 24px;
             }
+            .matrix-text-box {
+                font-size: 36px;
+            }
         }
     </style>
 </head>
@@ -451,11 +418,13 @@
 
     <video id="bg-music" src="sound.mp4" loop style="display:none;"></video>
 
+    <!-- شاشة الظرف -->
     <div id="envelope-screen" onclick="openEnvelope()">
         <div class="envelope-text">hey babe!</div>
         <div class="envelope"></div>
     </div>
 
+    <!-- المحتوى الرئيسي -->
     <div id="main-content">
         <div class="date-ribbon">
             <img src="date.jpeg" alt="2-8-2004">
@@ -475,25 +444,25 @@
         </button>
     </div>
 
+    <!-- نافذة السؤال -->
     <div id="quiz-modal">
         <div class="quiz-box">
             <span class="close-quiz-modal" onclick="closeQuizModal()">&times;</span>
-            <h3>تحب مين أكثر حدا؟ 🌸</h3>
-            <input type="text" id="answer-input" class="quiz-input" placeholder="اكتب إجابتك هنا..." onkeydown="if(event.key==='Enter') checkAnswer()">
+            <h3>تحب مين أكثر حدا؟ </h3>
+            <input type="text" id="answer-input" class="quiz-input" placeholder="..." onkeydown="if(event.key==='Enter') checkAnswer()">
             <br>
-            <button class="submit-quiz-btn" onclick="checkAnswer()">تأكيد ✨</button>
+            <button class="submit-quiz-btn" onclick="checkAnswer()">صح لو لا؟؟</button>
             <div id="quiz-error">laaa kol 5raa</div>
         </div>
     </div>
 
-    <div id="roses-overlay">
-        <div id="roses-bg" class="real-roses-bg"></div>
-
-        <div class="tiny-popup">
-            <h4>شطوور يا انوس وأنا اموت عليج 🌸🤍</h4>
-        </div>
+    <!-- شاشة التأثير بخلفية بيضاء وخطوط نازلة بلون بينك فاتح -->
+    <div id="matrix-overlay">
+        <canvas id="matrix-canvas"></canvas>
+        <div id="matrix-text" class="matrix-text-box">4TOOR ANOS</div>
     </div>
 
+    <!-- نافذة الفيديو -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeVideoModal()">&times;</span>
@@ -529,16 +498,6 @@
     const fullText = "Being with you is truly one of the best things that has ever happened to me. From the moment you came into my life, everything started to feel brighter and closer to my heart. \n\nThank you for loving me, for supporting me even when things are difficult, and for always reminding me that I'm not alone. You make ordinary days feel special just by being there. \n\nI'm so grateful for every laugh we share, every memory we create, and every moment we spend together. You have a way of making my heart feel safe and happy at the same time. Your kindness, the way you support me, stand by my side, and care for my best interest only make you closer and dearer to my heart. \n\nThank you for being my lifelong companion and my best friend. I'm so lucky that we are together. Happy Birthday again, my love. I love you more than words can ever explain. ❤️";
 
     function openEnvelope() {
-        if (typeof confetti === 'function') {
-            confetti({
-                particleCount: 250, 
-                spread: 100,        
-                origin: { y: 0.6 }, 
-                scalar: 1.2,        
-                colors: ['#ff758f', '#fbcad4', '#ffd166', '#06d6a0', '#118ab2']
-            });
-        }
-
         document.getElementById('envelope-screen').style.display = 'none';
         document.getElementById('main-content').style.display = 'block'; 
         document.body.style.backgroundColor = '#ffd1dc';
@@ -582,44 +541,91 @@
         document.getElementById('quiz-modal').style.display = 'none';
     }
 
+    let matrixRainInterval = null;
+
     function checkAnswer() {
         const inputVal = document.getElementById('answer-input').value.trim().toLowerCase();
 
         if (inputVal === "رودي" || inputVal === "أنتِ" || inputVal === "انتي") {
             closeQuizModal();
 
-            if (typeof confetti === 'function') {
-                confetti({
-                    particleCount: 200,
-                    spread: 100,
-                    origin: { y: 0.6 },
-                    colors: ['#ffb6c1', '#ffffff', '#ff69b4']
-                });
-            }
+            const matrixOverlay = document.getElementById('matrix-overlay');
+            matrixOverlay.style.display = 'flex';
 
-            const rosesOverlay = document.getElementById('roses-overlay');
-            const rosesBg = document.getElementById('roses-bg');
-
-            // 1. إعادة ضبط الكلاسات وإظهار الشاشة
-            rosesBg.classList.remove('roses-exit');
-            rosesBg.classList.add('roses-enter');
-            rosesOverlay.style.display = 'flex';
-
-            // 2. بعد 2.5 ثانية يبدأ تأثير خروج الورود السريع (Reverse Bloom)
-            setTimeout(() => {
-                rosesBg.classList.remove('roses-enter');
-                rosesBg.classList.add('roses-exit');
-            }, 2500);
-
-            // 3. عند انتهاء أنيميشن الخروج (بعد 3.1 ثانية) تختفي شاشة الورود تماماً ويفتح الفيديو فوراً
-            setTimeout(() => {
-                rosesOverlay.style.display = 'none';
-                openVideoModal();
-            }, 3100);
+            startMatrixRain();
+            startSequenceWords();
 
         } else {
             document.getElementById('quiz-error').style.display = 'block';
         }
+    }
+
+    // تأثير الخطوط النازلة بلون بينك فاتح على خلفية بيضاء
+    function startMatrixRain() {
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = "BRITHDAYANOSIIIIIDLEMI❣️❣️❣️❣️❣️❣️❣️❣️";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function draw() {
+            ctx.fillStyle = "rgba(255, 255, 255, 0.15)"; // تأثير تلاشي خفيف على خلفية بيضاء
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#ffb6d5"; // لون بينك فاتح للخطوط النازلة
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        matrixRainInterval = setInterval(draw, 33);
+    }
+
+    // تتابع ظهور الكلمات وراء بعضها بلون بينك فاتح
+    function startSequenceWords() {
+        const textBox = document.getElementById('matrix-text');
+        
+        // الخطوة 1: 4TOOR ANOS
+        textBox.innerHTML = "4TOOR ANOS";
+
+        // الخطوة 2: AMOT
+        setTimeout(() => {
+            textBox.innerHTML = "AMOT";
+        }, 1000);
+
+        // الخطوة 3: 3LEK
+        setTimeout(() => {
+            textBox.innerHTML = "3LEK";
+        }, 2000);
+
+        // الخطوة 4: القلب
+        setTimeout(() => {
+            textBox.innerHTML = "🤍🤍🤍🤍";
+        }, 3000);
+
+        // إنهاء التأثير وفتح الفيديو
+        setTimeout(() => {
+            clearInterval(matrixRainInterval);
+            document.getElementById('matrix-overlay').style.display = 'none';
+            openVideoModal();
+        }, 4000);
     }
 
     function openVideoModal() {
