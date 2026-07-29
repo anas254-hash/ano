@@ -250,7 +250,7 @@
             font-weight: bold;
         }
 
-        /* ==================== تأثير انضباط باقة الورود الكثيفة (TikTok Bloom Effect) ==================== */
+        /* ==================== شاشة الورود الكثيفة بالصورة المختارة ==================== */
         #roses-overlay {
             display: none;
             position: fixed;
@@ -258,76 +258,45 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: #fff5f8;
+            background-color: #fff0f5;
             z-index: 200;
             justify-content: center;
             align-items: center;
             overflow: hidden;
         }
 
-        /* خلفية الباقات والورود المتفتحة البينك والأبيض */
-        .blooming-bouquet {
-            position: absolute;
-            width: 140vmax;
-            height: 140vmax;
-            background: 
-                radial-gradient(circle at 50% 50%, #fff 0%, transparent 40%),
-                radial-gradient(circle at 35% 35%, #ffb6c1 0%, transparent 25%),
-                radial-gradient(circle at 65% 35%, #ff85a1 0%, transparent 25%),
-                radial-gradient(circle at 35% 65%, #ffccd5 0%, transparent 25%),
-                radial-gradient(circle at 65% 65%, #fff0f5 0%, transparent 25%),
-                radial-gradient(circle at 50% 20%, #ff4d6d 0%, transparent 30%),
-                radial-gradient(circle at 50% 80%, #ff758f 0%, transparent 30%);
-            border-radius: 50%;
-            animation: bloomExpand 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-            opacity: 0.95;
-        }
-
-        @keyframes bloomExpand {
-            0% { transform: scale(0); opacity: 0; }
-            60% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); opacity: 0.98; }
-        }
-
-        /* ورود تفصيلية شفافة متداخلة لتجسيم الورود باللون البينك والأبيض */
-        .rose-layer {
+        .real-roses-bg {
             position: absolute;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(circle, #ffffff 15px, transparent 16px),
-                radial-gradient(circle, #ffb6c1 25px, transparent 26px),
-                radial-gradient(circle, #ff4d79 35px, transparent 36px);
-            background-size: 90px 90px;
-            background-position: 0 0, 45px 45px, 20px 70px;
-            opacity: 0.8;
-            animation: rotateRoses 10s linear infinite;
+            background-image: url('download (1).jpg'); 
+            background-size: cover;
+            background-position: center;
+            animation: bloomRealRoses 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes rotateRoses {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(5deg) scale(1.05); }
-            100% { transform: rotate(0deg) scale(1); }
+        @keyframes bloomRealRoses {
+            0% { transform: scale(0.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        /* المربع الصغير جداً للتهنئة فوق الورود */
         .tiny-popup {
             position: relative;
-            background: rgba(255, 255, 255, 0.92);
-            border: 2px solid #ff758f;
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #ff758f;
             padding: 16px 24px;
             border-radius: 20px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(214, 51, 108, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             z-index: 220;
-            animation: popTiny 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s forwards;
+            animation: popTiny 0.4s ease-out 0.4s forwards;
             opacity: 0;
-            transform: scale(0.3);
-            max-width: 250px;
+            transform: scale(0.5);
+            max-width: 260px;
         }
 
         @keyframes popTiny {
-            0% { transform: scale(0.3); opacity: 0; }
+            0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
@@ -492,20 +461,19 @@
     <div id="quiz-modal">
         <div class="quiz-box">
             <span class="close-quiz-modal" onclick="closeQuizModal()">&times;</span>
-            <h3>تحب مين أكثر حدا؟ </h3>
-            <input type="text" id="answer-input" class="quiz-input" placeholder="..." onkeydown="if(event.key==='Enter') checkAnswer()">
+            <h3>تحب مين أكثر حدا؟ 🌸</h3>
+            <input type="text" id="answer-input" class="quiz-input" placeholder="اكتب إجابتك هنا..." onkeydown="if(event.key==='Enter') checkAnswer()">
             <br>
-            <button class="submit-quiz-btn" onclick="checkAnswer()">صح لو لا؟</button>
-            <div id="quiz-error">la kol 5raa/div>
+            <button class="submit-quiz-btn" onclick="checkAnswer()">تأكيد ✨</button>
+            <div id="quiz-error">laaa kol 5raa</div>
         </div>
     </div>
 
     <div id="roses-overlay">
-        <div class="blooming-bouquet"></div>
-        <div class="rose-layer"></div>
+        <div class="real-roses-bg"></div>
 
         <div class="tiny-popup">
-            <h4>شطوور يا انوس وأنا اموت عليج 🌸</h4>
+            <h4>شطوور يا انوس وأنا اموت عليج 🌸🤍</h4>
         </div>
     </div>
 
@@ -603,21 +571,20 @@
         if (inputVal === "رودي" || inputVal === "أنتِ" || inputVal === "انتي") {
             closeQuizModal();
 
-            // فرقعة ورود
             if (typeof confetti === 'function') {
                 confetti({
-                    particleCount: 220,
-                    spread: 120,
-                    origin: { y: 0.5 },
-                    colors: ['#ffb6c1', '#ffffff', '#ff69b4', '#fff0f5']
+                    particleCount: 200,
+                    spread: 100,
+                    origin: { y: 0.6 },
+                    colors: ['#ffb6c1', '#ffffff', '#ff69b4']
                 });
             }
 
-            // تفتح وتفتح الورود البينك والأبيض
+            // إظهار شاشة الورود الكثيفة والرسالة الصغار
             const rosesOverlay = document.getElementById('roses-overlay');
             rosesOverlay.style.display = 'flex';
 
-            // يختفي بعد 3 ثوانٍ ويفتح الفيديو
+            // اختفاء الورود بعد 3 ثوانٍ وتفعيل نافذة الفيديو
             setTimeout(() => {
                 rosesOverlay.style.display = 'none';
                 openVideoModal();
@@ -652,4 +619,3 @@
     
 </body>
 </html>
-  
