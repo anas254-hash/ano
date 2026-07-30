@@ -16,7 +16,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-y: auto; /* حل مشكلة السكرول العامة */
             position: relative;
             transition: background-color 0.5s ease;
         }
@@ -250,7 +250,7 @@
             font-weight: bold;
         }
 
-        /* ==================== تأثير خلفية بيضاء وتتابع الكلمات بلون بينك فاتح ==================== */
+        /* تأثير الخلفية البيضاء وتتابع الكلمات */
         #matrix-overlay {
             display: none;
             position: fixed;
@@ -258,7 +258,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ffffff; /* خلفية بيضاء بالكامل */
+            background-color: #ffffff;
             z-index: 200;
             justify-content: center;
             align-items: center;
@@ -277,7 +277,7 @@
         .matrix-text-box {
             position: relative;
             z-index: 210;
-            color: #ffb6d5; /* لون بينك فاتح جداً */
+            color: #ffb6d5;
             font-family: 'Bungee', sans-serif;
             font-size: 55px;
             font-weight: bold;
@@ -308,25 +308,45 @@
         .modal-content {
             position: relative;
             width: 95%;
-            max-width: 850px; 
+            max-width: 900px; 
             background-color: black;
             border-radius: 20px;
-            padding: 20px;
+            padding: 25px;
             box-sizing: border-box;
             max-height: 90vh;
-            overflow-y: auto; 
+            overflow-y: auto; /* حل مشكلة عدم حركة السكرول داخل النافذة */
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .video-text-container {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center; /* ضبط المحاذاة لتناسب الفيديو مع الكلام */
+            gap: 25px; 
+            margin-bottom: 25px;
+            width: 100%;
+        }
+
+        /* حل مشكلة حجم الفيديو ليكون متناسقاً ومناسباً بجانب الكلام */
+        .modal video {
+            width: 45%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 15px;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            flex-shrink: 0;
         }
 
         .modal-tex {
             flex: 1; 
             font-family: 'Amiri', serif !important; 
             font-size: 18px;
-            color:#cccccc ;
-            line-height: 1.5;
+            color: #cccccc;
+            line-height: 1.6;
             text-align: right; 
             direction: rtl;    
-            padding: 0px;
+            padding: 0;
         }
 
         .modal-gallery {
@@ -334,50 +354,31 @@
             margin-top: 25px;
             border-top: 1px dashed #fbcad4; 
             padding-top: 20px;
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: center !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         #special-gallery-text {
-            display: block !important;
-            visibility: visible !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            font-size: 18px !important; 
-            color: white !important; 
-            font-weight: bold !important;
-            line-height: 1.6 !important;
+            display: block;
+            visibility: visible;
+            width: 100%;
+            font-size: 18px; 
+            color: white; 
+            font-weight: bold;
+            line-height: 1.6;
             font-family: 'Bungee', sans-serif;
             text-align: center;
-            margin-top: 10px !important;
-            margin-bottom: 25px !important; 
-            padding: 0 15px !important;
-            box-sizing: border-box !important;
-        }
-
-        .video-text-container {
-            display: flex;
-            flex-direction: row-reverse;
-            align-items: flex-start;
-            gap: 20px; 
-            margin-bottom: 25px;
-            width: 100%;
-        }
-
-        .modal video {
-            width: 45%;
-            max-width: 320px;
-            height: auto;
-            border-radius: 15px;
-            display: block;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-top: 10px;
+            margin-bottom: 25px; 
+            padding: 0 15px;
+            box-sizing: border-box;
         }
 
         .modal-gallery img {
             width: 100%; 
             height: auto; 
-            max-height: 700px; 
+            max-height: 500px; 
             object-fit: contain; 
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
@@ -393,17 +394,19 @@
             z-index: 30;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .video-text-container {
-                flex-direction: row-reverse !important;
-                gap: 10px;
+                flex-direction: column !important; /* تحويل العناصر تحت بعضها في الشاشات الصغيرة لتجنب الصغر الشديد */
+                align-items: center;
+                gap: 15px;
             }
             .modal video {
-                width: 40% !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
             .modal-tex {
-                font-size: 14px !important;
-                line-height: 1.4;
+                font-size: 15px !important;
+                text-align: center !important;
             }
             #t {
                 font-size: 24px;
@@ -456,7 +459,7 @@
         </div>
     </div>
 
-    <!-- شاشة التأثير بخلفية بيضاء وخطوط نازلة بلون بينك فاتح -->
+    <!-- شاشة التأثير -->
     <div id="matrix-overlay">
         <canvas id="matrix-canvas"></canvas>
         <div id="matrix-text" class="matrix-text-box">4TOOR ANOS</div>
@@ -560,7 +563,6 @@
         }
     }
 
-    // تأثير الخطوط النازلة بلون بينك فاتح على خلفية بيضاء
     function startMatrixRain() {
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
@@ -578,10 +580,10 @@
         }
 
         function draw() {
-            ctx.fillStyle = "rgba(255, 255, 255, 0.15)"; // تأثير تلاشي خفيف على خلفية بيضاء
+            ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#ffb6d5"; // لون بينك فاتح للخطوط النازلة
+            ctx.fillStyle = "#ffb6d5";
             ctx.font = fontSize + "px monospace";
 
             for (let i = 0; i < drops.length; i++) {
@@ -598,29 +600,23 @@
         matrixRainInterval = setInterval(draw, 33);
     }
 
-    // تتابع ظهور الكلمات وراء بعضها بلون بينك فاتح
     function startSequenceWords() {
         const textBox = document.getElementById('matrix-text');
         
-        // الخطوة 1: 4TOOR ANOS
         textBox.innerHTML = "4TOOR ANOS";
 
-        // الخطوة 2: AMOT
         setTimeout(() => {
             textBox.innerHTML = "AMOT";
         }, 1000);
 
-        // الخطوة 3: 3LEK
         setTimeout(() => {
             textBox.innerHTML = "3LEK";
         }, 2000);
 
-        // الخطوة 4: القلب
         setTimeout(() => {
             textBox.innerHTML = "🤍🤍🤍🤍";
         }, 3000);
 
-        // إنهاء التأثير وفتح الفيديو
         setTimeout(() => {
             clearInterval(matrixRainInterval);
             document.getElementById('matrix-overlay').style.display = 'none';
