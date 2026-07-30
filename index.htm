@@ -11,7 +11,8 @@
             background-color: #ffffff;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* فرض خطوط أيفون كأول خيار لضمان ظهور الإيموجز بتصميم Apple */
+            font-family: -apple-system, BlinkMacSystemFont, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -258,7 +259,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ffffff;
+            background-color: #000000;
             z-index: 200;
             justify-content: center;
             align-items: center;
@@ -427,13 +428,11 @@
 
     <audio id="bg-music" src="sound.mp4" loop preload="auto" style="display:none;"></audio>
 
-    <!-- شاشة الظرف -->
     <div id="envelope-screen" onclick="openEnvelope()">
         <div class="envelope-text">hey babe!</div>
         <div class="envelope"></div>
     </div>
 
-    <!-- المحتوى الرئيسي -->
     <div id="main-content">
         <div class="date-ribbon">
             <img src="date.jpeg" alt="2-8-2004">
@@ -453,7 +452,6 @@
         </button>
     </div>
 
-    <!-- نافذة السؤال -->
     <div id="quiz-modal">
         <div class="quiz-box">
             <span class="close-quiz-modal" onclick="closeQuizModal()">&times;</span>
@@ -465,13 +463,11 @@
         </div>
     </div>
 
-    <!-- شاشة التأثير -->
     <div id="matrix-overlay">
         <canvas id="matrix-canvas"></canvas>
         <div id="matrix-text" class="matrix-text-box">4TOOR ANOS</div>
     </div>
 
-    <!-- نافذة الفيديو -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeVideoModal()">&times;</span>
@@ -577,8 +573,9 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        const letters = "BRITHDAYANOSIIIIIDLEMI❣️❣️❣️❣️❣️❣️❣️❣️";
-        const fontSize = 16;
+        // [تنويه]: يمكنكِ تغيير الإيموجي هنا إلى أي إيموجي تحبيه، وسيظهر بتصميم آيفون
+        const letters = "💗"; 
+        const fontSize = 18;
         const columns = canvas.width / fontSize;
         const drops = [];
 
@@ -587,15 +584,14 @@
         }
 
         function draw() {
-            ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = "#ffb6d5";
-            ctx.font = fontSize + "px monospace";
+            // فرض خط أيفون لتساقط الإيموجي بالشكل المطلوب
+            ctx.font = fontSize + "px -apple-system, BlinkMacSystemFont, 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif";
 
             for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                ctx.fillText(letters, i * fontSize, drops[i] * fontSize);
 
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
@@ -604,7 +600,7 @@
             }
         }
 
-        matrixRainInterval = setInterval(draw, 33);
+        matrixRainInterval = setInterval(draw, 35);
     }
 
     function startSequenceWords() {
@@ -655,4 +651,3 @@
     
 </body>
 </html>
-    
