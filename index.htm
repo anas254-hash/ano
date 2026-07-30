@@ -2,7 +2,6 @@
 <html lang="ar">
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Amiri&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
-    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>birthday anos</title>
@@ -12,7 +11,7 @@
             background-color: #ffffff;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -251,7 +250,7 @@
             font-weight: bold;
         }
 
-        /* شاشة التأثير - خلفية بيضاء صافية تماماً */
+        /* شاشة التأثير */
         #matrix-overlay {
             display: none;
             position: fixed;
@@ -278,12 +277,12 @@
         .matrix-text-box {
             position: relative;
             z-index: 210;
-            color: #ff758f;
+            color: #ffb6d5;
             font-family: 'Bungee', sans-serif;
             font-size: 55px;
             font-weight: bold;
             text-align: center;
-            text-shadow: 0 0 15px rgba(255, 117, 143, 0.3);
+            text-shadow: 0 0 15px rgba(255, 182, 213, 0.5);
             animation: textPulse 0.8s ease infinite alternate;
         }
 
@@ -428,11 +427,13 @@
 
     <audio id="bg-music" src="sound.mp4" loop preload="auto" style="display:none;"></audio>
 
+    <!-- شاشة الظرف -->
     <div id="envelope-screen" onclick="openEnvelope()">
         <div class="envelope-text">hey babe!</div>
         <div class="envelope"></div>
     </div>
 
+    <!-- المحتوى الرئيسي -->
     <div id="main-content">
         <div class="date-ribbon">
             <img src="date.jpeg" alt="2-8-2004">
@@ -452,6 +453,7 @@
         </button>
     </div>
 
+    <!-- نافذة السؤال -->
     <div id="quiz-modal">
         <div class="quiz-box">
             <span class="close-quiz-modal" onclick="closeQuizModal()">&times;</span>
@@ -463,11 +465,13 @@
         </div>
     </div>
 
+    <!-- شاشة التأثير -->
     <div id="matrix-overlay">
         <canvas id="matrix-canvas"></canvas>
         <div id="matrix-text" class="matrix-text-box">4TOOR ANOS</div>
     </div>
 
+    <!-- نافذة الفيديو -->
     <div id="video-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeVideoModal()">&times;</span>
@@ -573,9 +577,8 @@
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        // ضعي هنا الإيموجي الذي تريدين أن ينزل في المطر بألوانه الحقيقية
-        const targetEmoji = "🤍"; 
-        const fontSize = 24; // حجم واضح وكبير
+        const letters = "BRITHDAYANOSIIIIIDLEMI❣️❣️❣️❣️❣️❣️❣️❣️";
+        const fontSize = 16;
         const columns = canvas.width / fontSize;
         const drops = [];
 
@@ -583,22 +586,16 @@
             drops[x] = 1;
         }
 
-        // تحميل صورة الإيموجي عبر Twemoji لضمان الألوان الحقيقية وشكل آيفون الدقيق
-        const emojiHex = twemoji.convert.toCodePoint(targetEmoji);
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/${emojiHex}.png`;
-
         function draw() {
-            // خلفية بيضاء مع تأثير ذيل خفيف وناعم جداً
-            ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+            ctx.fillStyle = "#ffb6d5";
+            ctx.font = fontSize + "px monospace";
+
             for (let i = 0; i < drops.length; i++) {
-                // رسم صورة الإيموجي الحقيقية الملونة
-                if (img.complete) {
-                    ctx.drawImage(img, i * fontSize, drops[i] * fontSize, fontSize, fontSize);
-                }
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
                 if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
                     drops[i] = 0;
@@ -607,7 +604,7 @@
             }
         }
 
-        matrixRainInterval = setInterval(draw, 35);
+        matrixRainInterval = setInterval(draw, 33);
     }
 
     function startSequenceWords() {
@@ -618,7 +615,8 @@
         setTimeout(() => {
             textBox.innerHTML = "AMOT";
         }, 1000);
-setTimeout(() => {
+
+        setTimeout(() => {
             textBox.innerHTML = "3LEK";
         }, 2000);
 
@@ -653,16 +651,7 @@ setTimeout(() => {
         const music = document.getElementById('bg-music');
         if (music) music.volume = 1.0; 
     }
-
-    // تفعيل مكتبة إيموجز أيفون على كل عناصر الصفحة عند التحميل
-    window.onload = function() {
-        twemoji.parse(document.body, {
-            folder: 'svg',
-            ext: '.svg'
-        });
-    };
 </script>
     
 </body>
 </html>
-    
