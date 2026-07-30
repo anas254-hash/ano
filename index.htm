@@ -321,16 +321,15 @@
         .video-text-container {
             display: flex;
             flex-direction: row-reverse;
-            align-items: stretch; /* بيخلي الفيديو والكلام بنفس الطول والمستوى تماماً */
+            align-items: center; /* محاذاة العناصر في المنتصف لضمان التناسق الكامل */
             gap: 25px; 
             margin-bottom: 25px;
             width: 100%;
         }
 
-        /* ضبط حجم الفيديو ليصبح متناسقاً تماماً وبنفس ارتفاع وتنسيق الكلام */
+        /* ضبط حجم الفيديو والكلام ليصبحا متساويين ومنضبطين تماماً بجانب بعضهما */
         .modal video {
             width: 50%;
-            max-width: 400px;
             height: auto;
             max-height: 450px;
             object-fit: cover;
@@ -341,7 +340,7 @@
         }
 
         .modal-tex {
-            flex: 1; 
+            width: 50%;
             font-family: 'Amiri', serif !important; 
             font-size: 18px;
             color: #cccccc;
@@ -349,6 +348,7 @@
             text-align: right; 
             direction: rtl;    
             padding: 0;
+            box-sizing: border-box;
         }
 
         .modal-gallery {
@@ -407,6 +407,7 @@
                 max-width: 100% !important;
             }
             .modal-tex {
+                width: 100% !important;
                 font-size: 15px !important;
                 text-align: center !important;
             }
@@ -421,7 +422,7 @@
 </head>
 <body>
 
-    <video id="bg-music" src="sound.mp4" loop preload="auto" style="display:none;"></video>
+    <audio id="bg-music" src="sound.mp4" loop preload="auto" style="display:none;"></audio>
 
     <!-- شاشة الظرف -->
     <div id="envelope-screen" onclick="openEnvelope()">
@@ -503,9 +504,10 @@
     const fullText = "Being with you is truly one of the best things that has ever happened to me. From the moment you came into my life, everything started to feel brighter and closer to my heart. \n\nThank you for loving me, for supporting me even when things are difficult, and for always reminding me that I'm not alone. You make ordinary days feel special just by being there. \n\nI'm so grateful for every laugh we share, every memory we create, and every moment we spend together. You have a way of making my heart feel safe and happy at the same time. Your kindness, the way you support me, stand by my side, and care for my best interest only make you closer and dearer to my heart. \n\nThank you for being my lifelong companion and my best friend. I'm so lucky that we are together. Happy Birthday again, my love. I love you more than words can ever explain. ❤️";
 
     function openEnvelope() {
-        // تشغيل الأغنية فوراً مع الضغطة بدون أي تأخير
+        // تحويل العنصر إلى <audio> وتفعيل التشغيل الفوري بدون تأخير
         const music = document.getElementById('bg-music');
         if (music) {
+            music.currentTime = 0;
             music.play().catch(error => console.log("Music play blocked", error));
         }
 
