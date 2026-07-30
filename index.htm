@@ -16,7 +16,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-y: auto; /* حل مشكلة السكرول العامة */
+            overflow-y: auto;
             position: relative;
             transition: background-color 0.5s ease;
         }
@@ -250,7 +250,7 @@
             font-weight: bold;
         }
 
-        /* تأثير الخلفية البيضاء وتتابع الكلمات */
+        /* شاشة التأثير */
         #matrix-overlay {
             display: none;
             position: fixed;
@@ -308,30 +308,32 @@
         .modal-content {
             position: relative;
             width: 95%;
-            max-width: 900px; 
+            max-width: 950px; 
             background-color: black;
             border-radius: 20px;
             padding: 25px;
             box-sizing: border-box;
             max-height: 90vh;
-            overflow-y: auto; /* حل مشكلة عدم حركة السكرول داخل النافذة */
+            overflow-y: auto; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .video-text-container {
             display: flex;
             flex-direction: row-reverse;
-            align-items: center; /* ضبط المحاذاة لتناسب الفيديو مع الكلام */
+            align-items: stretch; /* بيخلي الفيديو والكلام بنفس الطول والمستوى تماماً */
             gap: 25px; 
             margin-bottom: 25px;
             width: 100%;
         }
 
-        /* حل مشكلة حجم الفيديو ليكون متناسقاً ومناسباً بجانب الكلام */
+        /* ضبط حجم الفيديو ليصبح متناسقاً تماماً وبنفس ارتفاع وتنسيق الكلام */
         .modal video {
-            width: 45%;
-            max-width: 350px;
+            width: 50%;
+            max-width: 400px;
             height: auto;
+            max-height: 450px;
+            object-fit: cover;
             border-radius: 15px;
             display: block;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
@@ -396,7 +398,7 @@
 
         @media (max-width: 768px) {
             .video-text-container {
-                flex-direction: column !important; /* تحويل العناصر تحت بعضها في الشاشات الصغيرة لتجنب الصغر الشديد */
+                flex-direction: column !important;
                 align-items: center;
                 gap: 15px;
             }
@@ -419,7 +421,7 @@
 </head>
 <body>
 
-    <video id="bg-music" src="sound.mp4" loop style="display:none;"></video>
+    <video id="bg-music" src="sound.mp4" loop preload="auto" style="display:none;"></video>
 
     <!-- شاشة الظرف -->
     <div id="envelope-screen" onclick="openEnvelope()">
@@ -501,15 +503,16 @@
     const fullText = "Being with you is truly one of the best things that has ever happened to me. From the moment you came into my life, everything started to feel brighter and closer to my heart. \n\nThank you for loving me, for supporting me even when things are difficult, and for always reminding me that I'm not alone. You make ordinary days feel special just by being there. \n\nI'm so grateful for every laugh we share, every memory we create, and every moment we spend together. You have a way of making my heart feel safe and happy at the same time. Your kindness, the way you support me, stand by my side, and care for my best interest only make you closer and dearer to my heart. \n\nThank you for being my lifelong companion and my best friend. I'm so lucky that we are together. Happy Birthday again, my love. I love you more than words can ever explain. ❤️";
 
     function openEnvelope() {
+        // تشغيل الأغنية فوراً مع الضغطة بدون أي تأخير
+        const music = document.getElementById('bg-music');
+        if (music) {
+            music.play().catch(error => console.log("Music play blocked", error));
+        }
+
         document.getElementById('envelope-screen').style.display = 'none';
         document.getElementById('main-content').style.display = 'block'; 
         document.body.style.backgroundColor = '#ffd1dc';
         startWordByWordTyping();
-
-        const music = document.getElementById('bg-music');
-        if (music) {
-            music.play().catch(error => console.log("Music play blocked"));
-        }
     }
 
     function startWordByWordTyping() {
